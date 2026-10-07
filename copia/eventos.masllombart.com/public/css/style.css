@@ -1,0 +1,422 @@
+/*--------------------------------------/*
+
+      vista detalle
+
+/*--------------------------------------*/
+
+.blog-content ul.blog-meta li {
+	line-height: 11px;
+}
+
+.panel-blog .blog-img img[alt^="m_"] {
+	width: auto;
+}
+
+/*--------------------------------------/*
+
+      vista update: milestone, provider;
+
+/*--------------------------------------*/
+
+
+#createmilestoneform .col-sm-6 > .col_image:first-of-type,
+#createproviderform .col-sm-7 > .col_image:first-of-type {
+	min-height: 44px;
+}
+
+#createmilestoneform .col-sm-6 > .col_image:first-of-type img,
+#createproviderform .col-sm-7 > .col_image:first-of-type img {
+	margin-top: 10px;
+}
+
+#createmilestoneform .col-sm-6 > .col_image:last-of-type,
+#createproviderform .col-sm-7 > .col_image:last-of-type {
+	bottom: 0px;
+	position: absolute;
+	right: 10px;
+	left: 180px;
+}
+
+#createproviderform #s2id_category {
+	width: 100%;
+}
+
+/*--------------------------------------/*
+
+      general
+
+/*--------------------------------------*/
+
+.btn-success, .paginate_button, .btn-primary, .form-group>.btn-default {
+	background-color: #b4794c !important;
+	border-color: #232323 !important;
+	color: #fff !important;
+}
+
+.btn-success:hover, .paginate_button:hover, .btn-primary:hover, .form-group>.btn-default:hover, .btn-primary.disabled {
+	background-color: #ddaf8c !important;
+	color: #232323 !important;
+}
+
+.btn-success:visited, .paginate_button:visited, .btn-primary:visited, .form-group>.btn-default:visited {
+	background-color: #b4794c !important;
+}
+
+.dropdown-menu-usermenu>li>a:hover {
+	background-color: #4e4e4e;
+}
+
+.children {
+	color: #fff !important;
+}
+
+.mt20 {
+	margin-top: 20px;
+}
+
+.mt50 {
+	margin-top: 50px;
+}
+
+
+/*--------------------------------------/*
+
+      visat conditions
+
+/*--------------------------------------*/
+
+.content-conditions h5,
+.content-conditions h5 strong {
+	font-weight: bold;
+	font-family: 'LatoRegular', 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, sans-serif;
+}
+
+/*.signinpanel .row .col-md-3 form {*/
+.signinpanel {
+	width: 900px !important;
+}
+.signin-info {
+	padding: 10px;
+}
+.signinpanel .row .col-md-4  form {
+	position: fixed;
+	width: 16.85%;
+	padding: 16px;
+}
+
+.signinpanel .row .col-md-4 form h5 {
+	font-weight: bolder;
+}
+
+#dw-searcher {
+	background: white;
+	border: 1px solid #9c8a8a;
+	position: absolute;
+	right: 20px;
+	padding: 10px 20px;
+	border-radius: 3px;
+}
+
+#dw-searcher p {
+	margin-bottom: 0;
+}
+
+#dw-searcher #counter {
+	color: #9b9b9b;
+    font-size: 12px;
+    line-height: 12px;
+    margin-bottom: 3px;
+}
+
+#dw-searcher input {
+	background: none;
+	border: 1px solid #9c8a8a;
+	border-radius: 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#dw-searcher input[type="submit"] {
+	line-height: 23px;
+}
+
+#dw-searcher button {
+	background: none;
+	border: 1px solid #9c8a8a;
+	border-radius: 3px;
+	padding: 2px 10px;
+}
+
+#dw-searcher button i {
+	height: 16px;
+}
+
+#dw-searcher button:hover,
+#dw-searcher button:focus,
+#dw-searcher button:active {
+	background: #EAEAEA;
+}
+
+#dw-searcher button:disabled {
+	background: none;
+	color: #C8C5C5;
+	border-color: #C8C5C5;
+}
+
+.search-found {
+	background-color: #FFF243;
+}
+
+/*--------------------------------------/*
+
+      boda
+
+/*--------------------------------------*/
+
+.errorInputForm {
+	border: 1px solid red;
+	color: red;
+}
+
+.tab-content {
+	border-radius: 3px;
+}
+
+p.dw-event-title {
+    margin-bottom: 0;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+p.dw-event-title span {
+    font-weight: normal;
+    font-size: 14px;
+}
+
+.dw-terms-container {
+	display: flex;
+	align-items: center;
+	align-content: center;
+}
+
+.dw-terms-container input[type="checkbox"] {
+	margin-right: 5px;
+	margin-top: -2px;
+}
+
+.dw-terms-container a {
+	margin-left: 5px;
+}
+
+.correctMinPrice{
+	color:green;
+}
+.incorrectMinPrice{
+	color:red;
+}
+.ui-state-disabled{
+	color:#5f5f5f;
+}
+
+.offerUser {
+	padding-left: 40px;
+}
+#genDates {
+    margin-top: 25px;
+    margin-left:10px;
+}
+.ms-dates {
+    margin-bottom: 15px;
+}
+.offerts-event {
+    margin: 0px 0px 15px 0px;
+}
+.temp1 span{
+	color: #2be9eb !important;
+}
+.temp2 span{
+	color: #d508e7 !important;
+}
+.temp3 span{
+	color: #0e65ee !important;
+}
+.temp4 span{
+	color: #e7a808 !important;
+}
+.temp5 span{
+	color: #61e708 !important;
+}
+.temp6 span{
+	color: #4f4040 !important;
+}
+.temp7 span{
+	color: #f476b7 !important; /* NUEVO202609 */
+}
+.mini1 span{
+	color: #dc3109 !important;
+}
+.mini2 span{
+	color: #e7a808 !important;
+}
+.mini3 span{
+	color: #61e708 !important;
+}
+.mini4 span{
+	color: #2be9eb !important;
+}
+.mini5 span{
+	color: #d508e7 !important;
+}
+.mini6 span{
+	color: #4f4040 !important;
+}
+.mini7 span{
+	color: #f476b7 !important; /* NUEVO202609 */
+}
+.tarif1, .tarif2, .tarif3, .tarif4, .tarif5, .tarif6, .tarif7, .minim1, .minim2, .minim3, .minim4, .minim5,.minim6,.minim7 /* NUEVO202609 */ {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin: 0px 5px;
+}
+.tarif1{
+	background-color: #2be9eb;
+}
+.tarif2{
+	background-color: #d508e7;
+}
+.tarif3{
+	background-color: #0e65ee;
+}
+.tarif4{
+	background-color: #e7a808;
+}
+.tarif5{
+	background-color: #61e708;
+}
+.tarif6{
+	background-color: #4f4040;
+	/*background-color: #f476b7;*/
+}
+.tarif7{
+	background-color: #f476b7; /* NUEVO202609 */
+}
+.minim1{
+	background-color: #dc3109;
+}
+.minim2{
+	background-color: #e7a808;
+}
+.minim3{
+	background-color: #61e708;
+}
+.minim4{
+	background-color: #2be9eb;
+}
+.minim5{
+	background-color: #d508e7;
+}
+.minim6{
+	background-color: #4f4040;
+	/*background-color: #f476b7;*/
+}
+.minim7{
+	background-color: #f476b7; /* NUEVO202609 */
+}
+
+.group-image,
+.group-video {
+	margin: 8px 0;
+}
+
+.link-image,
+.link-video {
+	margin: 0 2rem;
+}
+
+.image-modal,
+.video-modal {
+	width: 100%;
+}
+
+#s1 {
+	width: 160px;
+}
+
+.btn-waiting {
+	background-color: #ecec64 !important;
+	color: black !important;
+}
+
+/*--------------------------------------/*
+
+      Calendario
+
+/*--------------------------------------*/
+.printBtn{
+	margin-left: 20px; 
+	margin-top: 20px; 
+	border: 1px solid #ddd;
+}
+
+/*--------------------------------------/*
+
+      Facturas
+
+/*--------------------------------------*/
+
+#tableconcepts td {
+    vertical-align: middle;
+}
+
+/********** 18. MEDIA QUERIES **********/
+/***************************************/
+
+@media screen and (max-width: 992px) {
+	
+	
+	.signinpanel {
+		width: 100% !important;
+	}
+	
+	.signinpanel .row .col-xs-12.col-sm-5 form {
+		position: relative;
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	
+	.signinpanel {
+		width: 100% !important;
+	}
+	
+	.signinpanel .row .col-xs-12.col-sm-5 form {
+		width: 41.66666667%;
+	}
+
+	.link-image,
+	.link-video {
+		margin: 0 2rem 0 0;
+		font-size: 18px;
+		vertical-align: middle;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	
+	.signinpanel {
+		width: 100% !important;
+	}
+
+	.signinpanel .row .col-xs-12.col-sm-5 form {
+		width: 100%;
+	}
+	#dw-searcher {
+		right: 5px;
+		padding: 10px 10px;
+	}
+	.mobile-spacer-search {
+		height: 100px;
+	}
+}

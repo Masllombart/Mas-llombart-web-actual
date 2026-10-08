@@ -1,0 +1,56 @@
+# Web nueva de Mas Llombart: sitio estático, sin paso de compilación.
+[build]
+  publish = "web"
+  command = ""
+
+# Los formularios envían a /gracias/
+[[redirects]]
+  from = "/gracias/"
+  to = "/gracias.html"
+  status = 200
+
+# URLs de la web WordPress antigua → páginas nuevas (conserva el posicionamiento)
+[[redirects]]
+  from = "/la-masia/"
+  to = "/la-masia.html"
+  status = 301
+
+[[redirects]]
+  from = "/bodas-en-barcelona-mas-llombart/"
+  to = "/bodas-en-barcelona.html"
+  status = 301
+
+[[redirects]]
+  from = "/presupuesto-online/"
+  to = "/presupuesto-online.html"
+  status = 301
+
+[[redirects]]
+  from = "/contactanos/"
+  to = "/contactanos.html"
+  status = 301
+
+[[redirects]]
+  from = "/contact-form/"
+  to = "/contactanos.html"
+  status = 301
+
+[[redirects]]
+  from = "/cotizacion-empresas/"
+  to = "/empresas.html"
+  status = 301
+
+[[redirects]]
+  from = "/presupuestador-empresas/"
+  to = "/empresas.html"
+  status = 301
+
+[[redirects]]
+  from = "/politica-de-privacidad/"
+  to = "/privacidad.html"
+  status = 301
+
+[[headers]]
+  for = "/wp-content/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"

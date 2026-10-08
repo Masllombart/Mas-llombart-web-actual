@@ -1,0 +1,151 @@
+# Despliegue de masllombart.com en Netlify
+[build]
+  command = "node src/build.mjs"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# >>> TEMPORAL mientras se prueba en *.netlify.app: que Google no indexe la copia.
+# >>> BORRAR este bloque el día que masllombart.com apunte a Netlify.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# ---------- Cabeceras de seguridad (todas las páginas) ----------
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; font-src 'self'; connect-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'self'; object-src 'none'; upgrade-insecure-requests"
+    Strict-Transport-Security = "max-age=31536000"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"
+    Cross-Origin-Opener-Policy = "same-origin"
+
+# Caché larga para recursos con versión y fotos
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+[[headers]]
+  for = "/wp-content/uploads/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# Las URLs *.netlify.app y las vistas previas no deben indexarse (contenido duplicado)
+[context.deploy-preview]
+  command = "node src/build.mjs"
+[[context.deploy-preview.headers]]
+  for = "/*"
+  [context.deploy-preview.headers.values]
+    X-Robots-Tag = "noindex"
+
+# ---------- Redirecciones (conservan el SEO de la web WordPress) ----------
+# www → sin www (la canónica actual es https://masllombart.com/)
+[[redirects]]
+  from = "https://www.masllombart.com/*"
+  to = "https://masllombart.com/:splat"
+  status = 301
+  force = true
+[[redirects]]
+  from = "http://www.masllombart.com/*"
+  to = "https://masllombart.com/:splat"
+  status = 301
+  force = true
+
+# Páginas antiguas sin contenido propio
+[[redirects]]
+  from = "/contact-form/"
+  to = "/contactanos/"
+  status = 301
+[[redirects]]
+  from = "/contact-form"
+  to = "/contactanos/"
+  status = 301
+[[redirects]]
+  from = "/presupuestador-empresas/*"
+  to = "/cotizacion-empresas/"
+  status = 301
+[[redirects]]
+  from = "/presupuestador-empresas"
+  to = "/cotizacion-empresas/"
+  status = 301
+[[redirects]]
+  from = "/inicio/"
+  to = "/"
+  status = 301
+
+# Sitemaps de Yoast → sitemap nuevo
+[[redirects]]
+  from = "/sitemap_index.xml"
+  to = "/sitemap.xml"
+  status = 301
+[[redirects]]
+  from = "/page-sitemap.xml"
+  to = "/sitemap.xml"
+  status = 301
+[[redirects]]
+  from = "/post-sitemap.xml"
+  to = "/410.html"
+  status = 410
+[[redirects]]
+  from = "/category-sitemap.xml"
+  to = "/410.html"
+  status = 410
+[[redirects]]
+  from = "/author-sitemap.xml"
+  to = "/410.html"
+  status = 410
+
+# Entradas de demostración del tema (Queensland, Port Douglas…) y Hello world: retiradas para siempre
+[[redirects]]
+  from = "/2021/*"
+  to = "/410.html"
+  status = 410
+[[redirects]]
+  from = "/2025/05/*"
+  to = "/410.html"
+  status = 410
+[[redirects]]
+  from = "/category/*"
+  to = "/410.html"
+  status = 410
+[[redirects]]
+  from = "/author/*"
+  to = "/410.html"
+  status = 410
+[[redirects]]
+  from = "/feed/*"
+  to = "/410.html"
+  status = 410
+[[redirects]]
+  from = "/comments/feed/*"
+  to = "/410.html"
+  status = 410
+
+# Superficie de ataque de WordPress: ya no existe
+[[redirects]]
+  from = "/wp-admin/*"
+  to = "/410.html"
+  status = 410
+[[redirects]]
+  from = "/wp-login.php"
+  to = "/410.html"
+  status = 410
+[[redirects]]
+  from = "/xmlrpc.php"
+  to = "/410.html"
+  status = 410
+[[redirects]]
+  from = "/wp-json/*"
+  to = "/410.html"
+  status = 410
+
+# Dossier antiguo 2025 → dossier vigente
+[[redirects]]
+  from = "/wp-content/uploads/2025/06/Masllombart2025.pdf"
+  to = "/docs/dossier-bodas-2027-mas-llombart.pdf"
+  status = 301

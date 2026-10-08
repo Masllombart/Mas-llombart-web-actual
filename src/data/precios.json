@@ -1,0 +1,67 @@
+{
+  "_fuente": "Dossiers comerciales Calendario_2027Final.pdf y PDFFINAL2028.pdf. IVA 10% incluido en todos los importes.",
+  "2027": {
+    "menus": {
+      "1": [161, 145, 138, 138],
+      "2": [171, 155, 148, 148],
+      "3": [187, 171, 164, 164],
+      "4": [161, 145, 138, 138],
+      "5": [166, 150, 143, 143],
+      "6": [179, 163, 156, 156],
+      "7": [161, 145, 138, 138],
+      "8": [null, null, null, 128],
+      "9": 100
+    },
+    "infantil": 65,
+    "profesional": 75,
+    "senal": 1000,
+    "tasaSGAE": 0,
+    "extras": {
+      "sushi150": 950, "sushi250": 1150, "sushi400": 1400, "sushiman": 300,
+      "arroces": 750, "arroces_c4": 250,
+      "carnes": 1350, "carnes_c6": 450,
+      "quesos": 700, "ahumados": 750,
+      "jamonVerde": 800, "jamonBellota": 1100,
+      "foie": 500, "vermouth": 800, "croquetas": null,
+      "embutidos": 600, "gallego": 900, "cerveza": 600, "vinos": 650,
+      "packAperitivo": 1850, "packAperitivoSinAhorro": 2000,
+      "palomitas": 330, "candy": 415, "hotdogs": 550, "hamburguesas": 550, "pizzas": 550,
+      "frutasChoco": 7.70, "chocolates": 4, "churros": 4, "sandwich": 4, "crepes": 7.70, "petitResopon": null,
+      "packDisco": 1080, "packDiscoSinAhorro": 1295,
+      "ceremonia": 1250, "ceremoniante": 275, "gettingReady": 180, "tesla": 300, "recap": 400,
+      "horaDJ": 295, "horaBarra": 12
+    }
+  },
+  "2028": {
+    "menus": {
+      "1": [172, 156, 149, 149],
+      "2": [182, 166, 159, 159],
+      "3": [198, 182, 175, 175],
+      "4": [172, 156, 149, 149],
+      "5": [177, 161, 154, 154],
+      "6": [190, 174, 167, 167],
+      "7": [172, 156, 149, 149],
+      "8": [null, null, null, 139],
+      "9": 111
+    },
+    "infantil": 70,
+    "profesional": 80,
+    "senal": 1000,
+    "tasaSGAE": 250,
+    "extras": {
+      "sushi150": 1045, "sushi250": 1265, "sushi400": 1540, "sushiman": 330,
+      "arroces": 825, "arroces_c4": 275,
+      "carnes": 1485, "carnes_c6": 495,
+      "quesos": 770, "ahumados": 825,
+      "jamonVerde": 880, "jamonBellota": 1210,
+      "foie": 600, "vermouth": null, "croquetas": 550,
+      "embutidos": 660, "gallego": 990, "cerveza": 660, "vinos": 715,
+      "packAperitivo": 2035, "packAperitivoSinAhorro": 2310,
+      "palomitas": 365, "candy": 460, "hotdogs": 605, "hamburguesas": 605, "pizzas": 605,
+      "frutasChoco": null, "chocolates": null, "churros": 4.40, "sandwich": 4.40, "crepes": 8.50, "petitResopon": 550,
+      "packDisco": 1190, "packDiscoSinAhorro": 1430,
+      "ceremonia": 1350, "ceremoniante": 325, "gettingReady": 200, "tesla": 330, "recap": 440,
+      "horaDJ": 325, "horaBarra": 14
+    }
+  }
+}

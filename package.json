@@ -1,0 +1,16 @@
+{
+  "name": "masllombart-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Web estática de Mas Llombart con presupuestador de bodas 2027-2028",
+  "scripts": {
+    "build": "node src/build.mjs",
+    "imagenes": "node scripts/descargar-imagenes.mjs",
+    "preview": "npx serve dist"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.0"
+  },
+  "engines": { "node": ">=20" }
+}

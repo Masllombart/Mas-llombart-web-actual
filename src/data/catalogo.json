@@ -1,0 +1,644 @@
+{
+ "menus": [
+  {
+   "id": "1",
+   "nombre": "Menú 1",
+   "tipo": "Menú tradicional",
+   "aperitivo": "gala",
+   "primero": "A",
+   "segundo": "A",
+   "resumen": "Aperitivo de Gala (24 referencias), primer plato, sorbete casero, segundo plato y postre."
+  },
+  {
+   "id": "2",
+   "nombre": "Menú 2",
+   "tipo": "Menú tradicional",
+   "aperitivo": "gala",
+   "primero": "B",
+   "segundo": "B",
+   "resumen": "Aperitivo de Gala (24 referencias), primer plato, sorbete casero, segundo plato y postre."
+  },
+  {
+   "id": "3",
+   "nombre": "Menú 3",
+   "tipo": "Menú tradicional",
+   "aperitivo": "gala",
+   "primero": "C",
+   "segundo": "C",
+   "resumen": "Aperitivo de Gala (24 referencias), primer plato de mar, sorbete casero, segundo plato premium y postre."
+  },
+  {
+   "id": "4",
+   "nombre": "Menú 4",
+   "tipo": "Aperitivo completo",
+   "aperitivo": "gran",
+   "primero": null,
+   "segundo": "A",
+   "resumen": "Gran Aperitivo Mas Llombart (42 referencias), sorbete casero, segundo plato y postre."
+  },
+  {
+   "id": "5",
+   "nombre": "Menú 5",
+   "tipo": "Aperitivo completo",
+   "aperitivo": "gran",
+   "primero": null,
+   "segundo": "B",
+   "resumen": "Gran Aperitivo Mas Llombart (42 referencias), sorbete casero, segundo plato y postre."
+  },
+  {
+   "id": "6",
+   "nombre": "Menú 6",
+   "tipo": "Aperitivo completo",
+   "aperitivo": "gran",
+   "primero": null,
+   "segundo": "C",
+   "resumen": "Gran Aperitivo Mas Llombart (42 referencias), sorbete casero, segundo plato premium y postre."
+  },
+  {
+   "id": "7",
+   "nombre": "Menú 7",
+   "tipo": "Solo aperitivo",
+   "aperitivo": "gran",
+   "primero": null,
+   "segundo": null,
+   "resumen": "Gran Aperitivo Mas Llombart (42 referencias) con buffets y shows incluidos: quesos, parrillada de carnes y marisco, showcooking de arroces, crepes y hot dogs en discoteca.",
+   "incluye": [
+    "Buffet de quesos con surtido de panes y vinos",
+    "Parrillada de carnes, zamburiñas, almejas y navajas by Mas Llombart",
+    "Showcooking de arroces by Mas Llombart",
+    "Buffet de creps (discoteca)",
+    "Carrito de hot dogs (discoteca)"
+   ]
+  },
+  {
+   "id": "8",
+   "nombre": "Menú 8",
+   "tipo": "Menú tradicional · Tarifa 4",
+   "aperitivo": "basico",
+   "primero": "A",
+   "segundo": "A",
+   "resumen": "Aperitivo Mas Llombart (15 referencias), primer plato, segundo plato y postre. Solo disponible en fechas de Tarifa 4.",
+   "soloTarifa": 4
+  },
+  {
+   "id": "9",
+   "nombre": "Menú 9 · Viva la Vida",
+   "tipo": "Tardeo dominical",
+   "aperitivo": "vivalavida",
+   "primero": null,
+   "segundo": null,
+   "resumen": "Formato tardeo para bodas en domingo al aire libre: cocktail, barra libre, stand de vinos y cavas, buffets y showcookings, pasteles, discoteca con 2 h de barra libre y DJ y resopón.",
+   "soloDomingo": true
+  }
+ ],
+ "platos": {
+  "gala": [
+   "Chips de parmesano y pipas de calabaza tostadas",
+   "Crujientes de tubérculos tricolor con sal ahumada",
+   "Roll de salmón ahumado con crema de anchoas y brotes de albahaca crujiente",
+   "Crostini de escalivada asada con ventresca de atún",
+   "Mini tacos de vegetales a la parrilla",
+   "Bicolor de hummus clásico y de remolacha con AOVE",
+   "Crujiente de arroz con ensalada americana, gamba escalfada y vinagreta de sésamo",
+   "Trufa de foie con crocante de almendra tostada",
+   "Cazuela gourmet de pasta rellena de ragú boloñesa, queso fundido y albahaca",
+   "Rol de requesón y nueces envuelto en calabacín asado",
+   "Mini ensalada de algas con perlas de yuzu y semillas de amapola",
+   "Chupito de mazamorra cordobesa con tropicales y mousse de ventresca",
+   "Croquetas de pulpo gallego y pimentón de la Vera",
+   "Crocanti de pollo caramelizado y sésamo negro",
+   "Simulacro de calamar con patata paja",
+   "Patatas bravas con all i oli y su toque de Valentina",
+   "Trilogía de mini hamburguesas: pollo, ternera y quinoa",
+   "Tiras de calamar crujiente en tempura",
+   "Bocado de jamón de Guijuelo en croqueta cremosa",
+   "Vasito de romesco con tempura vegetal",
+   "Cremoso de risotto de setas ceps y parmesano reggiano",
+   "Fideuá marinera con calamar y all i oli cremoso",
+   "Bocado de gamba crujiente envuelta en jamón ibérico",
+   "Perla de bacalao con all i oli de arbequina"
+  ],
+  "granExtra": [
+   "Five shot de frutas con ron cubano",
+   "Brandada de bacalao con olivada y esferas de tomate",
+   "Tartar de salmón con mango, cebollino y wasabi",
+   "Tataki de atún con mayonesa Mas Llombart",
+   "Copa de salmorejo tradicional con virutas de Guijuelo",
+   "Tartar de solomillo sazonado al estilo tradicional",
+   "Crujiente de totopos con guacamole fresco",
+   "Bastones de queso crujiente con mermelada de tomate e higo",
+   "Bocadito de pan bao con pulled pork en su jugo",
+   "Almejas al estilo gallego con AOVE y pimentón ahumado",
+   "Flamenquín ibérico relleno de jamón y queso fundido en costra crujiente",
+   "Vieiras asadas al fuego con toque cítrico de lima",
+   "Gyoza de langostinos al estilo japo",
+   "Mejillón asado con reducción de trompeta negra y ratafía",
+   "Bocado de solomillo argentino con aliño criollo tradicional",
+   "Rollo de jabalí en canelón con bechamel suave de pera"
+  ],
+  "basico": [
+   "Chips de parmesano y pipas de calabaza tostadas",
+   "Crujientes de tubérculos tricolor con sal ahumada",
+   "Roll de salmón ahumado con crema de anchoas y brotes de albahaca crujiente",
+   "Crostini de escalivada asada con ventresca de atún",
+   "Mini tacos de vegetales a la parrilla",
+   "Bicolor de hummus clásico y de remolacha con AOVE",
+   "Crujiente de arroz con ensalada americana, gamba escalfada y vinagreta de sésamo",
+   "Mini ensalada de algas con perlas de yuzu y semillas de amapola",
+   "Trilogía de mini hamburguesas: pollo, ternera y quinoa",
+   "Tiras de calamar crujiente en tempura",
+   "Bocado de jamón de Guijuelo en croqueta cremosa",
+   "Vasito de romesco con tempura vegetal",
+   "Bastones de queso crujiente con mermelada de tomate e higo",
+   "Cremoso de risotto de setas ceps y parmesano reggiano",
+   "Simulacro de calamar con patata paja"
+  ],
+  "vivalavida": [
+   "Cocktail de bienvenida",
+   "Barra libre de cervezas, agua, refrescos, vinos y vermouths",
+   "Stand Codorníu de vinos y cavas",
+   "Dúo de hummus tradicional y remolacha",
+   "Guacamole con totopos",
+   "Bacalao con olivada negra y tomate concassé",
+   "Falso calamar de huevo con patata paja",
+   "Flamenquín cordobés con cerdo ibérico",
+   "Buffet de quesos: frutos secos, fruta fresca, mermeladas y surtido de panes",
+   "Buffet de embutidos catalano-ibéricos",
+   "Showcooking de arroces y fideuà",
+   "Showcooking de carnes a la brasa",
+   "Showcooking de almejas, navajas y zamburiñas",
+   "Buffet de croquetas delicatessen",
+   "Buffet de pasteles y variedad de chocolates",
+   "Tarta nupcial fake y muñeco de novios",
+   "Cafés y licores",
+   "Mojitos al entrar a la discoteca",
+   "2 h de discoteca con barra libre y DJ",
+   "A elegir resopón de pizzas o hot dogs"
+  ],
+  "primeros": {
+   "A": [
+    "Isla de vieira asada sobre mar de esmeralda y crujiente de calamar",
+    "Ensalada fresca de melón con crujiente de bacon, nueces, vinagreta de queso de cabra y miel y croutons",
+    "Burrata cremosa con tomate, albahaca y piñones sobre cama de verdes",
+    "Raviolis rellenos de calamar sobre risotto de menta y crema de escamarlán"
+   ],
+   "B": [
+    "Tartar de atún rojo sobre corazón de tomate, helado de apio y jengibre y vinagreta de mostaza antigua",
+    "Pulpo braseado con cremoso de parmesano y gorgonzola y pimentón ahumado de la Vera",
+    "Merluza crujiente con gambas al estilo all cremat",
+    "Lomo de bacalao reposado con setas de temporada y reducción de ratafía"
+   ],
+   "C": [
+    "Caldereta de bogavante con patata confitada y crujiente de puerro",
+    "Trilogía de lomo de lubina rellena de trigueros y cansalada ibérica con salsa de ceps",
+    "Suquet de rape con langostinos, cigalas y almejas frescas",
+    "Filete de dorada con carne de vieira, reducción de cítricos y albahaca y chips de remolacha"
+   ]
+  },
+  "segundos": {
+   "A": [
+    "Secreto ibérico confitado a la marsellesa con hierbas provenzales",
+    "Corvina a baja temperatura con hoja de berza, salsa de mango y crujiente de ibérico",
+    "Picantón relleno de dátiles y orejones con glaseado de miel y romero",
+    "Muslo de pato confitado con salsa de frutos del bosque y crujiente de pera"
+   ],
+   "B": [
+    "Solomillo de lechón con salsa de ceps",
+    "Lingote de ternera a baja temperatura con salsa de bolets y verduras de temporada",
+    "Milhojas de ternera con uvas frescas, setas silvestres y salsa de Oporto",
+    "Costillar ibérico a baja temperatura con crujiente de especias"
+   ],
+   "C": [
+    "Cordero de Aranda confitado en hojaldre con espaguetis de calabacín y tomatitos cherry",
+    "Entrecot de Nebraska con salsa Café de París infusionada con hierbas frescas, ajo y mantequilla aromatizada",
+    "Costillar Black Angus a baja temperatura en crujiente de pasta brick con reducción de vino tinto",
+    "Medallón de solomillo de ternera relleno de foie con reducción de Oporto"
+   ]
+  },
+  "postres": [
+   "Cheesecake de galleta Lotus con salsa de caramelo salado",
+   "Semifrío de pasión y crumble de Oreo con lágrima de pistacho",
+   "Tiramisú al Disaronno con nube de mascarpone, piñones tostados y crujiente de café",
+   "Mousse de chocolate blanco con corazón de frutos rojos y crujiente de caramelo",
+   "Suprema de Ferrero Rocher con praliné, esferas de chocolate al Frangélico y tierra de galleta crujiente",
+   "Clásico Sacher de trufa y compota de frambuesa",
+   "Bizcocho de zanahoria con creamy buttercream y blueberry coulis"
+  ]
+ },
+ "extras": [
+  {
+   "grupo": "aperitivo",
+   "id": "packAperitivo",
+   "nombre": "Pack Ahorro Full Aperitivo",
+   "desc": "Jamón ibérico brida verde + buffet de quesos con fruta fresca, frutos secos, panes y mermeladas + buffet de cervezas.",
+   "gastro": true,
+   "pack": [
+    "jamon",
+    "quesos",
+    "cerveza"
+   ],
+   "excluyeMenus": [
+    "7",
+    "9"
+   ]
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "sushi",
+   "nombre": "Buffet japo de sushi",
+   "desc": "Sushi + 50 gyozas + 50 baos.",
+   "gastro": true,
+   "variantes": [
+    [
+     "sushi150",
+     "150 piezas"
+    ],
+    [
+     "sushi250",
+     "250 piezas"
+    ],
+    [
+     "sushi400",
+     "400 piezas"
+    ]
+   ]
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "sushiman",
+   "nombre": "Sushiman en directo",
+   "desc": "Nuestro sushiman prepara el buffet japo delante de los invitados.",
+   "gastro": true,
+   "requiere": "sushi"
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "arroces",
+   "nombre": "Showcooking de arroces y fideuà",
+   "gastro": true,
+   "excluyeMenus": [
+    "7",
+    "9"
+   ],
+   "canjes": [
+    {
+     "aperitivos": 4,
+     "precioKey": "arroces_c4"
+    },
+    {
+     "aperitivos": 6,
+     "precio": 0
+    }
+   ]
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "carnes",
+   "nombre": "Showcooking de carnes a la brasa, zamburiñas, almejas y navajas",
+   "gastro": true,
+   "excluyeMenus": [
+    "7",
+    "9"
+   ],
+   "canjes": [
+    {
+     "aperitivos": 6,
+     "precioKey": "carnes_c6",
+     "menus": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6"
+     ]
+    },
+    {
+     "aperitivos": 9,
+     "precio": 0,
+     "menus": [
+      "4",
+      "5",
+      "6"
+     ]
+    }
+   ]
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "quesos",
+   "nombre": "Buffet de quesos",
+   "desc": "Quesos variados con fruta fresca, frutos secos y surtido de panes.",
+   "gastro": true,
+   "excluyeMenus": [
+    "7",
+    "9"
+   ],
+   "canjes": [
+    {
+     "aperitivos": 6,
+     "precio": 0
+    }
+   ]
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "ahumados",
+   "nombre": "Buffet de ahumados",
+   "desc": "Salmón, bacalao, sardinas, anchoas, olivas y encurtidos, dúo de mantequillas by Mas Llombart y sus panes.",
+   "gastro": true
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "jamon",
+   "nombre": "Jamón ibérico al corte",
+   "gastro": true,
+   "variantes": [
+    [
+     "jamonVerde",
+     "Cebo de campo 75% (brida verde)"
+    ],
+    [
+     "jamonBellota",
+     "100% bellota (brida negra)"
+    ]
+   ]
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "foie",
+   "nombre": "Surtido de foie artesano",
+   "desc": "Con variedad de panes.",
+   "gastro": true
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "croquetas",
+   "nombre": "Buffet de croquetas gourmet",
+   "desc": "200 unidades.",
+   "gastro": true,
+   "excluyeMenus": [
+    "9"
+   ]
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "embutidos",
+   "nombre": "Showcooking de embutidos catalano-ibéricos",
+   "gastro": true,
+   "excluyeMenus": [
+    "9"
+   ],
+   "canjes": [
+    {
+     "aperitivos": 6,
+     "precio": 0
+    }
+   ]
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "gallego",
+   "nombre": "Rincón gallego",
+   "gastro": true
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "vermouth",
+   "nombre": "Buffet de vermouth con sus latas",
+   "gastro": true
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "cerveza",
+   "nombre": "Buffet de cerveza",
+   "gastro": true
+  },
+  {
+   "grupo": "aperitivo",
+   "id": "vinos",
+   "nombre": "Buffet gourmet de vinos",
+   "gastro": true
+  },
+  {
+   "grupo": "discoteca",
+   "id": "packDisco",
+   "nombre": "Pack Ahorro Full Discoteque",
+   "desc": "Candy bar con repostería by Mas Llombart + carrito de hot dogs con sus toppings + carrito de palomitas.",
+   "gastro": true,
+   "pack": [
+    "candy",
+    "hotdogs",
+    "palomitas"
+   ],
+   "excluyeMenus": [
+    "7"
+   ]
+  },
+  {
+   "grupo": "discoteca",
+   "id": "palomitas",
+   "nombre": "Carrito de palomitas",
+   "gastro": true
+  },
+  {
+   "grupo": "discoteca",
+   "id": "candy",
+   "nombre": "Candy bar y repostería Mas Llombart",
+   "gastro": true
+  },
+  {
+   "grupo": "discoteca",
+   "id": "hotdogs",
+   "nombre": "Carrito de hot dogs Mas Llombart",
+   "desc": "Máximo 100 unidades.",
+   "gastro": true,
+   "excluyeMenus": [
+    "7"
+   ]
+  },
+  {
+   "grupo": "discoteca",
+   "id": "hamburguesas",
+   "nombre": "Buffet de hamburguesas",
+   "desc": "Máximo 100 unidades.",
+   "gastro": true
+  },
+  {
+   "grupo": "discoteca",
+   "id": "pizzas",
+   "nombre": "Buffet de pizzas",
+   "desc": "25 unidades.",
+   "gastro": true
+  },
+  {
+   "grupo": "discoteca",
+   "id": "petitResopon",
+   "nombre": "Le Petit Resopón",
+   "desc": "Croissants y brioches calientes, mortadela italiana, jamón york, queso tierno, catalana, 2 mermeladas y Philadelphia.",
+   "gastro": true
+  },
+  {
+   "grupo": "discoteca",
+   "id": "frutasChoco",
+   "nombre": "Buffet de frutas bañadas en chocolate blanco y negro",
+   "gastro": true,
+   "porPersona": true,
+   "minPersonas": 70
+  },
+  {
+   "grupo": "discoteca",
+   "id": "chocolates",
+   "nombre": "Buffet de chocolates",
+   "gastro": true,
+   "porPersona": true,
+   "minPersonas": 75
+  },
+  {
+   "grupo": "discoteca",
+   "id": "churros",
+   "nombre": "Chocolate con churros",
+   "gastro": true,
+   "porPersona": true,
+   "minPersonas": 50
+  },
+  {
+   "grupo": "discoteca",
+   "id": "sandwich",
+   "nombre": "Surtido de sándwiches",
+   "gastro": true,
+   "porPersona": true,
+   "minPersonas": 50
+  },
+  {
+   "grupo": "discoteca",
+   "id": "crepes",
+   "nombre": "Buffet de crepes dulces",
+   "gastro": true,
+   "porPersona": true,
+   "minPersonas": 70,
+   "excluyeMenus": [
+    "7"
+   ]
+  },
+  {
+   "grupo": "servicios",
+   "id": "ceremonia",
+   "nombre": "Ceremonia civil en nuestros jardines",
+   "desc": "Sillas blancas de madera plegables, decoración floral, megafonía, música a cargo de nuestro DJ, agua, limonada, naranjada y cocktail de cava. Plan B interior incluido.",
+   "gastro": false
+  },
+  {
+   "grupo": "servicios",
+   "id": "ceremoniante",
+   "nombre": "Ceremoniante (actor)",
+   "gastro": false,
+   "requiere": "ceremonia"
+  },
+  {
+   "grupo": "servicios",
+   "id": "gettingReady",
+   "nombre": "Salón Getting Ready",
+   "desc": "Disponible hasta 4 h antes del evento, con chester para fotografía, espejo y mesa de trabajo para maquillaje.",
+   "gastro": false
+  },
+  {
+   "grupo": "servicios",
+   "id": "tesla",
+   "nombre": "Coche de recogida Tesla",
+   "gastro": false
+  },
+  {
+   "grupo": "servicios",
+   "id": "recap",
+   "nombre": "Wedding Recap",
+   "desc": "Vídeo emocional entregado en menos de 24 h: clips sin editar, recap de hasta 5 min, vídeo extra de 2 min, 2 vídeos de 20 s y 2 posts con copies.",
+   "gastro": false
+  },
+  {
+   "grupo": "servicios",
+   "id": "horaDJ",
+   "nombre": "Horas extra de DJ",
+   "gastro": false,
+   "horas": true
+  },
+  {
+   "grupo": "servicios",
+   "id": "horaBarra",
+   "nombre": "Horas extra de barra libre",
+   "desc": "Por persona adulta y hora (mínimo 50 personas, niños gratis).",
+   "gastro": false,
+   "horas": true,
+   "barra": true
+  }
+ ],
+ "incluido": [
+  "IVA del 10%",
+  "Finca en exclusiva: un único evento al día",
+  "Asesoramiento y planificación completa del evento",
+  "Cocktail de pre-ceremonia o bienvenida",
+  "Barra libre en el aperitivo: refrescos, agua, cerveza, vermouth, vinos y cava",
+  "Bodega incluida en el salón",
+  "Dietas personalizadas: alergias, veganos, vegetarianos, sin gluten, halal",
+  "Cocina propia: pan, pastelería y sorbetes caseros",
+  "Atención de nuestro maître durante todo el evento",
+  "Centros florales para el salón y el aperitivo",
+  "Decoración floral personalizada del jardín",
+  "Marcasitios, minutas personalizadas y seating plan",
+  "Mantelería y cristalería en diferentes colores",
+  "Tarta nupcial fake, postre real y muñeco de novios",
+  "Cafés y licores",
+  "Música ambiente personalizada y proyector en el salón",
+  "Mojitos de bienvenida en la discoteca",
+  "2 horas de barra libre y DJ en discoteca",
+  "Planes B de ceremonia y aperitivo en interior",
+  "Parking gratuito en la finca"
+ ],
+ "incluidoVivaLaVida": [
+  "IVA del 10%",
+  "Finca en exclusiva: un único evento al día",
+  "Atención de nuestro maître durante todo el evento",
+  "Cocktail de bienvenida",
+  "Barra libre de cervezas, agua, refrescos, vinos y vermouths",
+  "Stand Codorníu de vinos y cavas",
+  "Buffets y showcookings de quesos, embutidos, arroces, carnes a la brasa, almejas, navajas y zamburiñas y croquetas",
+  "Buffet de pasteles y variedad de chocolates",
+  "Tarta nupcial fake y muñeco de novios",
+  "Cafés y licores",
+  "Centros florales para las mesas del aperitivo y decoración floral del jardín",
+  "Plan B integrado en la naturaleza",
+  "Música personalizada en todo el evento y cartel de bienvenida",
+  "Sillas en el jardín y servicio de gent gran",
+  "Dietas personalizadas y cocina propia",
+  "Mojitos al entrar a la discoteca",
+  "2 horas de discoteca con barra libre y DJ",
+  "Resopón a elegir: pizzas o hot dogs",
+  "Parking gratuito en la finca"
+ ],
+ "pruebaMenu": {
+  "2027": [
+   [
+    15000,
+    6
+   ],
+   [
+    13500,
+    4
+   ]
+  ],
+  "2028": [
+   [
+    15000,
+    6
+   ],
+   [
+    14000,
+    4
+   ]
+  ],
+  "extra": {
+   "2027": 80,
+   "2028": 90
+  }
+ }
+}

@@ -24,6 +24,8 @@
   function iso(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); }
   function parseIso(s) { var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
   function hoyIso() { return iso(new Date()); }
+  /* Mínimo de presupuesto: algunos días del PDF tienen tarifa pero no mínimo → se muestra 'a consultar' */
+  function fMin(x) { return x == null ? 'a consultar' : f(x); }
   function infoFecha(s) {
     var a = s.slice(0, 4); if (!CAL[a]) return null;
     var t = CAL[a].tarifas[s]; if (!t) return null;
@@ -92,7 +94,7 @@
     vista = parseIso(s); vista.setDate(1);
     var d = parseIso(s), dom = d.getDay() === 0;
     var txt = '<strong>' + DIAS[d.getDay()].replace(/^./, function (c) { return c.toUpperCase(); }) + ' ' + d.getDate() + ' de ' + MESES[d.getMonth()] + ' de ' + d.getFullYear() + '</strong><br>' +
-      'Tarifa ' + inf.tarifa + ' · Mínimo de presupuesto en gastronomía: <strong>' + f(inf.minimo) + '</strong>';
+      'Tarifa ' + inf.tarifa + ' · Mínimo de presupuesto en gastronomía: <strong>' + fMin(inf.minimo) + '</strong>';
     if (dom) txt += '<br><span class="pz-nota">Las bodas en domingo se celebran a mediodía (ceremonia como máximo a las 14 h)' +
       (inf.anio === '2027' ? ', salvo que el lunes sea festivo nacional o en agosto.' : ', salvo que el día siguiente sea festivo nacional o en Cataluña.') + '</span>';
     txt += '<br><span class="pz-nota">La disponibilidad real de la fecha se confirma con nuestro equipo.</span>';
@@ -285,7 +287,7 @@
     if (r.ajuste) h += '<tr><td>Ajuste hasta el mínimo de la fecha</td><td>' + f(r.ajuste) + '</td></tr>';
     h += '</table>';
     var pct = Math.min(100, r.minimo ? r.gastro / r.minimo * 100 : 100);
-    h += '<p class="pz-nota">Gastronomía: ' + f(r.gastro) + ' de ' + f(r.minimo) + ' de mínimo</p><div class="barra-min" aria-hidden="true"><i data-w="' + pct.toFixed(0) + '"></i></div>';
+    h += '<p class="pz-nota">Gastronomía: ' + f(r.gastro) + ' de ' + fMin(r.minimo) + ' de mínimo</p><div class="barra-min" aria-hidden="true"><i data-w="' + pct.toFixed(0) + '"></i></div>';
     if (r.ajuste) h += '<div class="aviso">Os faltan <strong>' + f(r.ajuste) + '</strong> en gastronomía para el mínimo de esta fecha. Si no lo completáis, se factura el mínimo igualmente: mejor convertirlo en extras para vuestros invitados.<button type="button" class="boton blanco" id="btn-sugerir">Sugerir extras para completarlo</button></div>';
     else h += '<div class="aviso ok">Alcanzáis el mínimo de presupuesto de esta fecha.</div>';
     r.avisos.forEach(function (a) { h += '<div class="aviso">' + a + '</div>'; });
@@ -322,7 +324,7 @@
   function textoResumen() {
     if (!ULTIMO || !S.menu) return '';
     var d = parseIso(S.fecha);
-    var t = 'Presupuesto web Mas Llombart\nFecha: ' + DIAS[d.getDay()] + ' ' + d.getDate() + ' de ' + MESES[d.getMonth()] + ' de ' + d.getFullYear() + ' (Tarifa ' + S.tarifa + ', mínimo ' + f(ULTIMO.minimo) + ')\n';
+    var t = 'Presupuesto web Mas Llombart\nFecha: ' + DIAS[d.getDay()] + ' ' + d.getDate() + ' de ' + MESES[d.getMonth()] + ' de ' + d.getFullYear() + ' (Tarifa ' + S.tarifa + ', mínimo ' + fMin(ULTIMO.minimo) + ')\n';
     t += 'Adultos: ' + S.adultos + ' · Niños: ' + S.ninos + ' · Profesionales: ' + S.prof + '\n';
     ULTIMO.lin.forEach(function (l) { t += '- ' + l[0] + ': ' + f(l[1]) + '\n'; });
     if (ULTIMO.ajuste) t += '- Ajuste hasta mínimo: ' + f(ULTIMO.ajuste) + '\n';

@@ -23,6 +23,8 @@ const TEL = [
   { nombre: 'Elisabet', tel: '611 821 360' },
 ];
 const telHref = (t) => 'tel:+34' + t.replace(/\s/g, '');
+// Intranet de novios. Cambiar a https://eventos.masllombart.com cuando ese dominio apunte a Netlify.
+const INTRANET = 'https://masllombart-intranet.netlify.app';
 const WA = 'https://api.whatsapp.com/send?phone=34672494212&text=' + encodeURIComponent('Hola, vengo de la web de Mas Llombart y me gustaría información para nuestra boda.');
 const IG = 'https://www.instagram.com/masllombart/';
 const MAPA = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Mas Llombart, Avinguda de la Conreria 16, 08105 Sant Fost de Campsentelles');
@@ -107,7 +109,7 @@ ${p.heroImg ? `<link rel="preload" as="image" href="${img(p.heroImg)}" fetchprio
     <div class="acciones-cab">
       <a href="${IG}" aria-label="Instagram de Mas Llombart" rel="noopener" target="_blank">${SVG.ig.replace('class="icono"', 'class="icono icono-sm"')}</a>
       <a href="${WA}" aria-label="Escribir por WhatsApp" rel="noopener" target="_blank">${SVG.wa.replace('class="icono"', 'class="icono icono-sm"')}</a>
-      <a href="https://eventos.masllombart.com" aria-label="Área de novios" rel="noopener">${SVG.user}</a>
+      <a href="${INTRANET}" aria-label="Área de novios" rel="noopener">${SVG.user}</a>
     </div>
   </div>
   ${p.migas && p.ruta !== '/' ? `<nav class="migas contenedor" aria-label="Migas de pan"><ol>${p.migas.map(([n, u], i) => i === p.migas.length - 1 ? `<li aria-current="page">${n}</li>` : `<li><a href="${u}">${n}</a></li>`).join('')}</ol></nav>` : ''}
@@ -470,7 +472,7 @@ paginas.push({
         <form id="form-presupuesto" class="form" name="presupuesto" method="POST" data-netlify="true" netlify-honeypot="empresa-web" action="/gracias/">
           <input type="hidden" name="form-name" value="presupuesto">
           <p class="oculto-bot"><label>No rellenar: <input name="empresa-web" tabindex="-1" autocomplete="off"></label></p>
-          <input type="hidden" name="fecha" id="lead-fecha"><input type="hidden" name="total" id="lead-total">
+          <input type="hidden" name="fecha" id="lead-fecha"><input type="hidden" name="total" id="lead-total"><input type="hidden" name="adultos" id="lead-adultos"><input type="hidden" name="ninos" id="lead-ninos"><input type="hidden" name="menu" id="lead-menu">
           <textarea name="resumen" id="lead-resumen" hidden readonly></textarea>
           <div class="fila"><div><label for="l-nombre">Nombres de la pareja</label><input id="l-nombre" name="nombre" required autocomplete="name" maxlength="120"></div>
           <div><label for="l-tel">Teléfono</label><input id="l-tel" name="telefono" type="tel" required autocomplete="tel" maxlength="30"></div></div>

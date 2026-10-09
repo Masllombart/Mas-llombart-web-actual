@@ -391,17 +391,32 @@
 
   /* ---------- Solicitud (lead) ---------- */
   var form = $('#form-presupuesto');
+  var SOLICITUD_URL = 'https://mtmiykxmxcchubgewpyq.supabase.co/functions/v1/solicitud-web';
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
     var est = $('#lead-estado');
     if (!S.fecha || !S.menu) { est.className = 'estado-form error'; est.textContent = 'Elige fecha y menú antes de enviar.'; return; }
     $('#lead-resumen').value = textoResumen();
     $('#lead-fecha').value = S.fecha; $('#lead-total').value = ULTIMO ? Math.round(ULTIMO.total) : '';
-    var datos = new URLSearchParams(new FormData(form)).toString();
+    $('#lead-adultos').value = S.adultos; $('#lead-ninos').value = S.ninos;
+    var md = menuDef(S.menu); $('#lead-menu').value = md ? md.nombre : S.menu;
+    var fd = new FormData(form), obj = {};
+    fd.forEach(function (v, k) { obj[k] = v; });
     est.className = 'estado-form'; est.textContent = 'Enviando…';
-    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: datos })
-      .then(function (r) { if (!r.ok) throw new Error(r.status); est.className = 'estado-form ok'; est.textContent = '¡Recibido! Os escribimos en menos de 24 h laborables con vuestro presupuesto detallado.'; form.reset(); })
-      .catch(function () { est.className = 'estado-form error'; est.innerHTML = 'No se ha podido enviar. Escribidnos a <a href="mailto:info@masllombart.com">info@masllombart.com</a> o por WhatsApp.'; });
+    // 1) A la intranet: entra como visita en el CRM de Mas Llombart
+    var aIntranet = fetch(SOLICITUD_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(obj) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = new Error(j.error || r.status); e.mensaje = j.error; e.status = r.status; throw e; } return j; }); });
+    // 2) Respaldo: Netlify Forms (aviso por email a info@masllombart.com si está configurado)
+    var aNetlify = fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(fd).toString() })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); });
+    Promise.allSettled([aIntranet, aNetlify]).then(function (res) {
+      if (res[0].status === 'fulfilled' || res[1].status === 'fulfilled') {
+        est.className = 'estado-form ok'; est.textContent = '¡Recibido! Os escribimos en menos de 24 h laborables con vuestro presupuesto detallado.'; form.reset(); return;
+      }
+      var m = res[0].reason && res[0].reason.status === 429 && res[0].reason.mensaje;
+      est.className = 'estado-form error';
+      est.innerHTML = m ? m : 'No se ha podido enviar. Escribidnos a <a href="mailto:info@masllombart.com">info@masllombart.com</a> o por WhatsApp.';
+    });
   });
   /* WhatsApp a Javi (672 494 212) con el presupuesto ya escrito */
   var WA_TEL = '34672494212';

@@ -616,7 +616,10 @@ paginas.push({
   <img class="fondo" src="${img('2025/08/personas-en-eventos-de-negocios.jpg')}" alt="" loading="lazy" decoding="async">
   <div class="contenido">
     <h2>Descarga nuestro dossier y solicita tu presupuesto en menos de 1 minuto. ¡Sin compromiso!</h2>
-    <a class="boton azul" href="/contactanos/#escribenos">Solicita tu presupuesto</a>
+    <div class="botones">
+      <a class="boton azul" href="/docs/dossier-empresas-2027-mas-llombart.pdf" download>Descargar dossier de empresas 2027</a>
+      <a class="boton azul" href="/contactanos/#escribenos">Solicita tu presupuesto</a>
+    </div>
   </div>
 </section>
 <section class="seccion">
@@ -627,7 +630,7 @@ paginas.push({
       <div class="ventaja grande">${ICONOS.estrella}<p>Diferentes espacios interiores y exteriores para personalizar tu evento.</p></div>
       <div class="ventaja grande">${ICONOS.copa}<p>Amplia variedad de menús: coffee breaks, cócteles y menús servidos.</p></div>
       <div class="ventaja grande">${ICONOS.pantalla}<p>Equipamiento audiovisual disponible (pantalla, micros, sonido).</p></div>
-      <div class="ventaja grande">${ICONOS.descarga}<p>Acceso gratuito al dossier descargable con precios y condiciones.</p></div>
+      <div class="ventaja grande">${ICONOS.descarga}<p><a href="/docs/dossier-empresas-2027-mas-llombart.pdf" download>Dossier descargable</a> con precios y condiciones.</p></div>
       <div class="ventaja grande">${ICONOS.grupo}<p>Presupuestos para eventos desde 50 personas.</p></div>
     </div>
   </div>

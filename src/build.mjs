@@ -81,7 +81,7 @@ function layout(p) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(p.titulo)}</title>
 <meta name="description" content="${esc(p.descripcion)}">
-<link rel="canonical" href="${url}">
+${p.noindex ? '' : `<link rel="canonical" href="${url}">`}
 <meta name="robots" content="${p.noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}">
 <meta property="og:locale" content="es_ES">
 <meta property="og:type" content="website">
@@ -726,12 +726,11 @@ if (existsSync(join(RAIZ, 'wp-content'))) cpSync(join(RAIZ, 'wp-content'), join(
 const indexables = paginas.filter((p) => !p.noindex && p.ruta.endsWith('/'));
 writeFileSync(join(DIST, 'sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${indexables.map((p) => `  <url><loc>${SITIO}${p.ruta}</loc><lastmod>${HOY}</lastmod></url>`).join('\n')}
+${indexables.map((p) => `  <url><loc>${SITIO}${p.ruta}</loc>${p.actualizado ? `<lastmod>${p.actualizado}</lastmod>` : ''}</url>`).join('\n')}
 </urlset>
 `);
 writeFileSync(join(DIST, 'robots.txt'), `User-agent: *
 Allow: /
-Disallow: /gracias/
 
 Sitemap: ${SITIO}/sitemap.xml
 `);

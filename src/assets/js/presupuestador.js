@@ -281,6 +281,7 @@
   function pintarResumen(r) {
     ULTIMO = r;
     var c = $('#resumen-cuerpo');
+    $('#btn-pdf').hidden = !(S.fecha && S.menu);
     if (!S.fecha) { c.innerHTML = '<p>Elige una fecha en el calendario para ver tarifas y mínimos.</p>'; actualizarMovil(null); return; }
     if (!S.menu) { c.innerHTML = '<p>Ahora elige el menú.</p>'; actualizarMovil(null); return; }
     var h = '<table>' + r.lin.map(function (l) { return '<tr><td>' + l[0] + '</td><td>' + f(l[1]) + '</td></tr>'; }).join('');
@@ -435,7 +436,72 @@
     if (!S.fecha || !S.menu) { ev.preventDefault(); $('#resumen-titulo').scrollIntoView({ behavior: 'smooth' }); return; }
     actualizarWhatsapp();
   });
-  $('#btn-imprimir').addEventListener('click', function () { window.print(); });
+  /* ---------- PDF: se descarga directamente (jsPDF se carga solo al pulsar) ---------- */
+  function cargarJsPdf() {
+    if (window.jspdf) return Promise.resolve(window.jspdf.jsPDF);
+    return new Promise(function (ok, ko) {
+      var sc = document.createElement('script');
+      sc.src = '/assets/js/vendor/jspdf.umd.min.js'; sc.onload = function () { ok(window.jspdf.jsPDF); }; sc.onerror = ko;
+      document.head.appendChild(sc);
+    });
+  }
+  var pdfTxt = function (t) { return String(t).replace(/\u00a0/g, ' '); };
+  function crearPdf(jsPDF) {
+    var doc = new jsPDF({ unit: 'mm', format: 'a4' }), W = 210, M = 18, y = 0, r = ULTIMO;
+    var tinta = [31, 36, 52], gris = [110, 110, 120];
+    function salto(h) { if (y + h > 278) { doc.addPage(); y = 20; } }
+    function linea(izq, der, negrita) {
+      doc.setFont('helvetica', negrita ? 'bold' : 'normal'); doc.setFontSize(10.5);
+      var partes = doc.splitTextToSize(pdfTxt(izq), W - 2 * M - 38);
+      salto(partes.length * 5 + 1.5);
+      doc.text(partes, M, y); if (der != null) doc.text(pdfTxt(der), W - M, y, { align: 'right' });
+      y += partes.length * 5;
+      doc.setDrawColor(225, 220, 210); doc.line(M, y - 2.6, W - M, y - 2.6); y += 1.5;
+    }
+    doc.setFillColor(tinta[0], tinta[1], tinta[2]); doc.rect(0, 0, W, 30, 'F');
+    doc.setTextColor(255, 255, 255); doc.setFont('times', 'normal'); doc.setFontSize(22); doc.text('Mas Llombart', M, 15);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5); doc.text('Presupuesto estimado de boda', M, 22);
+    doc.text('Sant Fost de Campcentelles (Barcelona)', W - M, 22, { align: 'right' });
+    y = 42; doc.setTextColor(tinta[0], tinta[1], tinta[2]);
+    var d = parseIso(S.fecha), md = menuDef(S.menu);
+    doc.setFont('times', 'normal'); doc.setFontSize(17);
+    doc.text(DIAS[d.getDay()].charAt(0).toUpperCase() + DIAS[d.getDay()].slice(1) + ' ' + d.getDate() + ' de ' + MESES[d.getMonth()] + ' de ' + d.getFullYear(), M, y); y += 7;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(gris[0], gris[1], gris[2]);
+    doc.text(pdfTxt('Tarifa ' + S.tarifa + ' · mínimo de la fecha: ' + fMin(r.minimo)), M, y); y += 5;
+    doc.text(pdfTxt('Adultos: ' + S.adultos + ' · Niños: ' + S.ninos + ' · Profesionales: ' + S.prof + (md ? ' · Menú: ' + md.nombre : '')), M, y); y += 9;
+    doc.setTextColor(tinta[0], tinta[1], tinta[2]);
+    r.lin.forEach(function (l) { linea(l[0], f(l[1])); });
+    if (r.ajuste) linea('Ajuste hasta el mínimo de la fecha', f(r.ajuste));
+    y += 4; salto(26);
+    doc.setFont('times', 'normal'); doc.setFontSize(24); doc.text(pdfTxt(f(r.total)), W - M, y + 6, { align: 'right' });
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+    doc.text('Total estimado, IVA incluido', M, y + 6);
+    y += 11; doc.setTextColor(gris[0], gris[1], gris[2]);
+    if (S.adultos) { doc.text(pdfTxt(f(r.total / S.adultos) + ' por adulto'), W - M, y, { align: 'right' }); y += 5; }
+    doc.setTextColor(tinta[0], tinta[1], tinta[2]); y += 4;
+    salto(14); doc.setFont('times', 'normal'); doc.setFontSize(15); doc.text('Qué incluye este precio', M, y); y += 7;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5);
+    incluidos(r).forEach(function (t) {
+      var partes = doc.splitTextToSize(pdfTxt(t), W - 2 * M - 6); salto(partes.length * 4.6 + 1);
+      doc.text('-', M, y); doc.text(partes, M + 5, y); y += partes.length * 4.6 + 1;
+    });
+    y += 3; doc.setTextColor(gris[0], gris[1], gris[2]); doc.setFontSize(9);
+    var nota = doc.splitTextToSize(pdfTxt('Paga y señal para reservar: ' + f(P[S.anio].senal) + '. Presupuesto orientativo y sin compromiso, sujeto a disponibilidad de la fecha. Las horas extra de barra libre y DJ se recomienda decidirlas el mismo día.'), W - 2 * M);
+    salto(nota.length * 4.2 + 14); doc.text(nota, M, y); y += nota.length * 4.2 + 6;
+    doc.setDrawColor(225, 220, 210); doc.line(M, y, W - M, y); y += 5;
+    doc.text('Mas Llombart · info@masllombart.com · WhatsApp 672 494 212 · masllombart.com', M, y);
+    return doc;
+  }
+  $('#btn-pdf').addEventListener('click', function () {
+    var b = this;
+    if (!ULTIMO || !S.fecha || !S.menu) return;
+    var txt = b.textContent; b.disabled = true; b.textContent = 'Preparando PDF…';
+    cargarJsPdf().then(function (jsPDF) {
+      crearPdf(jsPDF).save('Presupuesto-Mas-Llombart-' + S.fecha + '.pdf');
+    }).catch(function () {
+      alert('No se ha podido crear el PDF. Escribidnos a info@masllombart.com o por WhatsApp y os lo enviamos.');
+    }).then(function () { b.disabled = false; b.textContent = txt; });
+  });
 
   construirExtras();
   pintarCalendario(); pintarMenus(); pintarExtras(); leerUrl(); calcular();

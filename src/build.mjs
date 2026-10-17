@@ -458,6 +458,14 @@ paginas.push({
         <p class="pz-nota">En los menús 1 a 7 podéis canjear aperitivos por algunos buffets (máximo 6 aperitivos en los menús 1–3 y 12 en los menús 4–7).</p>
         <div id="extras"></div>
       </div>
+      <aside class="resumen" aria-labelledby="resumen-titulo">
+        <h3 id="resumen-titulo">Vuestro presupuesto</h3>
+        <div id="resumen-cuerpo" aria-live="polite"></div>
+        <div class="resumen-botones no-imprimir">
+          <button class="boton" type="button" id="btn-pdf" hidden>Descargar PDF</button>
+          <a class="boton azul" href="#solicitar">Nos gusta, contactadnos</a>
+        </div>
+      </aside>
       <div class="pz-paso no-imprimir" id="solicitar">
         <h3><span class="n">PASO 5</span> ¿Os gusta? Hablamos</h3>
         <div class="wa-cta">
@@ -480,17 +488,12 @@ paginas.push({
           <div><label for="l-msg">¿Algo más que debamos saber? (opcional)</label><textarea id="l-msg" name="mensaje" maxlength="2000"></textarea></div>
           <label class="check"><input type="checkbox" name="privacidad" value="acepto" required> <span>Acepto la <a href="/politica-de-privacidad/">política de privacidad</a>.</span></label>
           <p class="aviso-legal-form">Responsable: Sinsofood 1996, S.L. Finalidad: enviaros el presupuesto y atender vuestra consulta. Podéis ejercer vuestros derechos en info@masllombart.com.</p>
-          <div class="botones"><button class="boton" type="submit">Enviar</button> <button class="boton contorno" type="button" id="btn-imprimir">Imprimir / PDF</button></div>
+          <div class="botones"><button class="boton" type="submit">Enviar</button></div>
           <p id="lead-estado" class="estado-form" role="status"></p>
         </form>
         </details>
       </div>
     </div>
-    <aside class="resumen" aria-labelledby="resumen-titulo">
-      <h3 id="resumen-titulo">Vuestro presupuesto</h3>
-      <div id="resumen-cuerpo" aria-live="polite"></div>
-      <a class="boton azul no-imprimir" href="#solicitar">Nos gusta, contactadnos</a>
-    </aside>
   </div>
   <div class="resumen-movil" id="resumen-movil" hidden><span>Total estimado <strong id="resumen-movil-total"></strong></span><a href="#resumen-titulo">Ver qué incluye</a></div>
 </section>

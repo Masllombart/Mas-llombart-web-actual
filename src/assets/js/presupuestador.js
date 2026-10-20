@@ -273,7 +273,8 @@
     }
     var minimo = S.fecha ? CAL[S.anio].importeMinimo[String(S.nivelMin)] : 0;
     var ajuste = S.menu && gastro < minimo ? minimo - gastro : 0;
-    var total = gastro + ajuste + otros;
+    // El total es el precio real de lo elegido (como en la intranet): el mínimo y lo que falta se enseñan aparte, debajo
+    var total = gastro + otros;
     pintarResumen({ lin: lin, gastro: gastro, otros: otros, minimo: minimo, ajuste: ajuste, total: total, avisos: avisos, canjeAp: canjeAp });
     guardarUrl();
   }
@@ -285,7 +286,6 @@
     if (!S.fecha) { c.innerHTML = '<p>Elige una fecha en el calendario para ver tarifas y mínimos.</p>'; actualizarMovil(null); return; }
     if (!S.menu) { c.innerHTML = '<p>Ahora elige el menú.</p>'; actualizarMovil(null); return; }
     var h = '<table>' + r.lin.map(function (l) { return '<tr><td>' + l[0] + '</td><td>' + f(l[1]) + '</td></tr>'; }).join('');
-    if (r.ajuste) h += '<tr><td>Ajuste hasta el mínimo de la fecha</td><td>' + f(r.ajuste) + '</td></tr>';
     h += '</table>';
     var pct = Math.min(100, r.minimo ? r.gastro / r.minimo * 100 : 100);
     h += '<p class="pz-nota">Gastronomía: ' + f(r.gastro) + ' de ' + fMin(r.minimo) + ' de mínimo</p><div class="barra-min" aria-hidden="true"><i data-w="' + pct.toFixed(0) + '"></i></div>';
@@ -293,6 +293,7 @@
     else h += '<div class="aviso ok">Alcanzáis el mínimo de presupuesto de esta fecha.</div>';
     r.avisos.forEach(function (a) { h += '<div class="aviso">' + a + '</div>'; });
     h += '<p class="total">' + f(r.total) + '</p><p class="pp">Total estimado, IVA incluido' + (S.adultos ? ' · ' + f(r.total / S.adultos) + ' por adulto' : '') + '</p>';
+    h += '<p class="pz-nota">Mínimo de gastronomía de esta fecha: <strong>' + fMin(r.minimo) + '</strong>' + (r.ajuste ? ' · os faltan <strong>' + f(r.ajuste) + '</strong> para llegar' : ' · alcanzado ✓') + '</p>';
     h += '<p class="pz-nota">Paga y señal para reservar: ' + f(P[S.anio].senal) + '. Las horas extra de barra libre y DJ se recomiendan decidir el mismo día.</p>';
     h += '<details class="incluye" open><summary>Qué incluye este precio</summary><ul>' + incluidos(r).map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ul></details>';
     c.innerHTML = h;
@@ -328,8 +329,8 @@
     var t = 'Presupuesto web Mas Llombart\nFecha: ' + DIAS[d.getDay()] + ' ' + d.getDate() + ' de ' + MESES[d.getMonth()] + ' de ' + d.getFullYear() + ' (Tarifa ' + S.tarifa + ', mínimo ' + fMin(ULTIMO.minimo) + ')\n';
     t += 'Adultos: ' + S.adultos + ' · Niños: ' + S.ninos + ' · Profesionales: ' + S.prof + '\n';
     ULTIMO.lin.forEach(function (l) { t += '- ' + l[0] + ': ' + f(l[1]) + '\n'; });
-    if (ULTIMO.ajuste) t += '- Ajuste hasta mínimo: ' + f(ULTIMO.ajuste) + '\n';
-    t += 'TOTAL ESTIMADO (IVA incl.): ' + f(ULTIMO.total) + '\nEnlace: ' + location.href;
+    t += 'TOTAL ESTIMADO (IVA incl.): ' + f(ULTIMO.total) + '\n';
+    t += 'Mínimo de gastronomía de la fecha: ' + fMin(ULTIMO.minimo) + (ULTIMO.ajuste ? ' (faltan ' + f(ULTIMO.ajuste) + ')' : ' (alcanzado)') + '\nEnlace: ' + location.href;
     return t;
   }
 
@@ -471,13 +472,13 @@
     doc.text(pdfTxt('Adultos: ' + S.adultos + ' · Niños: ' + S.ninos + ' · Profesionales: ' + S.prof + (md ? ' · Menú: ' + md.nombre : '')), M, y); y += 9;
     doc.setTextColor(tinta[0], tinta[1], tinta[2]);
     r.lin.forEach(function (l) { linea(l[0], f(l[1])); });
-    if (r.ajuste) linea('Ajuste hasta el mínimo de la fecha', f(r.ajuste));
     y += 4; salto(26);
     doc.setFont('times', 'normal'); doc.setFontSize(24); doc.text(pdfTxt(f(r.total)), W - M, y + 6, { align: 'right' });
     doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
     doc.text('Total estimado, IVA incluido', M, y + 6);
     y += 11; doc.setTextColor(gris[0], gris[1], gris[2]);
     if (S.adultos) { doc.text(pdfTxt(f(r.total / S.adultos) + ' por adulto'), W - M, y, { align: 'right' }); y += 5; }
+    doc.text(pdfTxt('Mínimo de gastronomía de la fecha: ' + fMin(r.minimo) + (r.ajuste ? ' · faltan ' + f(r.ajuste) + ' para llegar' : ' · alcanzado')), M, y); y += 5;
     doc.setTextColor(tinta[0], tinta[1], tinta[2]); y += 4;
     salto(14); doc.setFont('times', 'normal'); doc.setFontSize(15); doc.text('Qué incluye este precio', M, y); y += 7;
     doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5);

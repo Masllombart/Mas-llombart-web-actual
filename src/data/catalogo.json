@@ -559,6 +559,7 @@
    "grupo": "servicios",
    "id": "horaDJ",
    "nombre": "Horas extra de DJ",
+   "desc": "Cada hora extra de DJ va siempre con su hora extra de barra libre (se añaden juntas).",
    "gastro": false,
    "horas": true
   },
@@ -566,7 +567,7 @@
    "grupo": "servicios",
    "id": "horaBarra",
    "nombre": "Horas extra de barra libre",
-   "desc": "Por persona adulta y hora (mínimo 50 personas, niños gratis).",
+   "desc": "Por persona adulta y hora (mínimo 50 personas, niños gratis). Va siempre con la misma hora extra de DJ.",
    "gastro": false,
    "horas": true,
    "barra": true

@@ -236,6 +236,14 @@
       }
     });
   }
+  // La hora extra de DJ y la de barra libre van siempre juntas: marcar una marca la otra y llevan las mismas horas
+  var PAREJA = { horaDJ: 'horaBarra', horaBarra: 'horaDJ' };
+  function enlazarDjBarra(id) {
+    var otro = PAREJA[id]; if (!otro || !S.extras[otro]) return;
+    var a = S.extras[id], b = S.extras[otro];
+    b.on = a.on; b.horas = a.horas;
+    var hi = $('#x-' + otro + '-h'); if (hi && String(hi.value) !== String(a.horas)) hi.value = a.horas;
+  }
   function onExtra(ev) {
     var d = ev.target.closest('.extra'); if (!d) return;
     var id = d.dataset.id, st = S.extras[id], k = ev.target.dataset.k;
@@ -243,6 +251,7 @@
     else if (k === 'variante') st.variante = ev.target.value;
     else if (k === 'canje') st.canje = parseInt(ev.target.value, 10);
     else if (k === 'horas') { var h = parseInt(ev.target.value, 10); st.horas = isNaN(h) || h < 1 ? 1 : Math.min(h, 6); }
+    enlazarDjBarra(id);
     pintarExtras(); calcular();
   }
   $('#extras').addEventListener('change', onExtra);
@@ -385,6 +394,7 @@
       st.canje = parseInt(p[2], 10); if (isNaN(st.canje)) st.canje = -1;
       st.horas = parseInt(p[3], 10) || 1;
       var hi = $('#x-' + p[0] + '-h'); if (hi) hi.value = st.horas;
+      enlazarDjBarra(p[0]);
     });
     var fq = q.get('f');
     if (fq && /^\d{4}-\d{2}-\d{2}$/.test(fq) && infoFecha(fq) && fq >= hoyIso()) {

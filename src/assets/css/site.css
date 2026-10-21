@@ -266,6 +266,7 @@ textarea{min-height:170px;resize:vertical}
 .extra.activo .opciones{display:flex}
 .extra .opciones label{margin:0}
 .extra .opciones select,.extra .opciones input{width:auto;padding:.45rem .6rem;font-size:.86rem}
+.extra .opciones input[type=number]{width:5.5rem;min-width:5.5rem;font-size:16px;text-align:center;padding:.55rem .5rem}
 .extra.bloqueado{opacity:.5}
 .resumen{margin-bottom:1.5rem;background:var(--banda);color:#D8D9E0;border-radius:var(--radio);padding:1.6rem}
 .resumen h3{color:#fff;font-size:1.9rem}

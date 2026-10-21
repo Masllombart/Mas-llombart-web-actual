@@ -295,7 +295,7 @@ const FAQ_MASIA = [
   ['¿Cuántos eventos realizan al día?', 'Solo se celebra un evento por día para garantizar la exclusividad y que el equipo dedique toda la atención a los novios.'],
   ['¿Qué tipo de gastronomía ofrecen?', 'Ofrecemos gastronomía de autor elaborada en casa: panes, pasteles, sorbetes y helados propios. Los menús se adaptan con opciones para invitados veganos, vegetarianos, sin gluten o con alergias.'],
   ['¿El lugar tiene jardines o espacios exteriores?', 'Sí, la finca cuenta con más de 5.500 m² de jardines que sirven de escenario natural para las celebraciones.'],
-  ['¿Qué capacidad tiene la masía?', 'Disponemos de dos salones: el salón panorámico, con capacidad para 210 comensales, y el salón tradicional, para 140 personas.'],
+  ['¿Qué capacidad tiene la masía?', 'Disponemos de dos salones: el salón de madera y cristal, con capacidad para 210 comensales, y el salón de piedra, para 140 personas.'],
   ['¿Tenéis parking?', 'Sí, junto a la masía tenemos un parking privado y gratuito para nuestros clientes.'],
   ['¿Cómo puedo contactar con Mas Llombart para más información?', 'Puedes contactar mediante el formulario de contacto de la web, por correo electrónico a info@masllombart.com o llamando a los números 672 494 212, 664 563 403 o 611 821 360.'],
 ];

@@ -23,8 +23,8 @@ const TEL = [
   { nombre: 'Elisabet', tel: '611 821 360' },
 ];
 const telHref = (t) => 'tel:+34' + t.replace(/\s/g, '');
-// Intranet de novios. Cambiar a https://eventos.masllombart.com cuando ese dominio apunte a Netlify.
-const INTRANET = 'https://masllombart-intranet.netlify.app';
+// Intranet de novios: de momento la ANTIGUA (eventos.masllombart.com). Cuando la nueva esté lista, se apunta ese subdominio a Netlify y este enlace no cambia.
+const INTRANET = 'https://eventos.masllombart.com';
 const WA = 'https://api.whatsapp.com/send?phone=34672494212&text=' + encodeURIComponent('Hola, vengo de la web de Mas Llombart y me gustaría información para nuestra boda.');
 const IG = 'https://www.instagram.com/masllombart/';
 const MAPA = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Mas Llombart, Avinguda de la Conreria 16, 08105 Sant Fost de Campsentelles');

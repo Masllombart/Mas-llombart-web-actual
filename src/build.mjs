@@ -437,7 +437,7 @@ paginas.push({
         <p class="pz-nota">Los colores indican la tarifa del día. Lunes y martes la finca está cerrada salvo vísperas y festivos.</p>
         <div class="cal-cab"><button type="button" id="cal-prev" aria-label="Mes anterior">‹</button><span class="cal-mes" id="cal-mes" aria-live="polite"></span><button type="button" id="cal-next" aria-label="Mes siguiente">›</button></div>
         <div class="cal" id="cal"></div>
-        <div class="leyenda"><span><i class="t1"></i>Tarifa 1</span><span><i class="t2"></i>Tarifa 2</span><span><i class="t3"></i>Tarifa 3</span><span><i class="t4"></i>Tarifa 4</span></div>
+        <div class="leyenda"><span><i class="t1"></i>Tarifa 1</span><span><i class="t2"></i>Tarifa 2</span><span><i class="t3"></i>Tarifa 3</span><span><i class="t4"></i>Tarifa 4</span><span><i class="ocu"></i>Ya reservada</span></div>
         <div class="fecha-info" id="fecha-info" hidden aria-live="polite"></div>
       </div>
       <div class="pz-paso">
@@ -480,7 +480,7 @@ paginas.push({
         <form id="form-presupuesto" class="form" name="presupuesto" method="POST" data-netlify="true" netlify-honeypot="empresa-web" action="/gracias/">
           <input type="hidden" name="form-name" value="presupuesto">
           <p class="oculto-bot"><label>No rellenar: <input name="empresa-web" tabindex="-1" autocomplete="off"></label></p>
-          <input type="hidden" name="fecha" id="lead-fecha"><input type="hidden" name="total" id="lead-total"><input type="hidden" name="adultos" id="lead-adultos"><input type="hidden" name="ninos" id="lead-ninos"><input type="hidden" name="menu" id="lead-menu">
+          <input type="hidden" name="fecha" id="lead-fecha"><input type="hidden" name="total" id="lead-total"><input type="hidden" name="adultos" id="lead-adultos"><input type="hidden" name="ninos" id="lead-ninos"><input type="hidden" name="menu" id="lead-menu"><input type="hidden" name="q" id="lead-q">
           <textarea name="resumen" id="lead-resumen" hidden readonly></textarea>
           <div class="fila"><div><label for="l-nombre">Nombres de la pareja</label><input id="l-nombre" name="nombre" required autocomplete="name" maxlength="120"></div>
           <div><label for="l-tel">Teléfono</label><input id="l-tel" name="telefono" type="tel" required autocomplete="tel" maxlength="30"></div></div>
@@ -488,7 +488,7 @@ paginas.push({
           <div><label for="l-msg">¿Algo más que debamos saber? (opcional)</label><textarea id="l-msg" name="mensaje" maxlength="2000"></textarea></div>
           <label class="check"><input type="checkbox" name="privacidad" value="acepto" required> <span>Acepto la <a href="/politica-de-privacidad/">política de privacidad</a>.</span></label>
           <p class="aviso-legal-form">Responsable: Sinsofood 1996, S.L. Finalidad: enviaros el presupuesto y atender vuestra consulta. Podéis ejercer vuestros derechos en info@masllombart.com.</p>
-          <div class="botones"><button class="boton" type="submit">Enviar</button></div>
+          <div class="botones"><button class="boton" type="submit">Enviadme el presupuesto</button></div>
           <p id="lead-estado" class="estado-form" role="status"></p>
         </form>
         </details>

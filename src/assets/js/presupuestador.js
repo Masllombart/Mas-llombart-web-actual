@@ -26,6 +26,10 @@
   function hoyIso() { return iso(new Date()); }
   /* Mínimo de presupuesto: algunos días del PDF tienen tarifa pero no mínimo → se muestra 'a consultar' */
   function fMin(x) { return x == null ? 'a consultar' : f(x); }
+  /* Fechas ya vendidas (las da la intranet; si no responde, el calendario sigue funcionando sin ellas) */
+  var OCUPADAS = {};
+  var SOLICITUD_URL = 'https://mtmiykxmxcchubgewpyq.supabase.co/functions/v1/solicitud-web';
+  function ocupada(s) { return !!OCUPADAS[s]; }
   function infoFecha(s) {
     var a = s.slice(0, 4); if (!CAL[a]) return null;
     var t = CAL[a].tarifas[s]; if (!t) return null;
@@ -70,7 +74,10 @@
       var s = iso(new Date(y, mo, d)), inf = infoFecha(s), b = document.createElement('button');
       b.type = 'button'; b.textContent = d;
       var nombre = DIAS[new Date(y, mo, d).getDay()] + ' ' + d + ' de ' + MESES[mo] + ' de ' + y;
-      if (inf && s >= hoy) {
+      if (inf && s >= hoy && ocupada(s)) {
+        b.disabled = true; b.className = 'ocupada'; b.title = 'Fecha ya reservada';
+        b.setAttribute('aria-label', nombre + ', ya reservada');
+      } else if (inf && s >= hoy) {
         b.className = 'disp t' + inf.tarifa + (s === S.fecha ? ' sel' : '');
         b.setAttribute('aria-label', nombre + ', tarifa ' + inf.tarifa);
         b.dataset.fecha = s;
@@ -97,7 +104,8 @@
       'Tarifa ' + inf.tarifa + ' · Mínimo de presupuesto en gastronomía: <strong>' + fMin(inf.minimo) + '</strong>';
     if (dom) txt += '<br><span class="pz-nota">Las bodas en domingo se celebran a mediodía (ceremonia como máximo a las 14 h)' +
       (inf.anio === '2027' ? ', salvo que el lunes sea festivo nacional o en agosto.' : ', salvo que el día siguiente sea festivo nacional o en Cataluña.') + '</span>';
-    txt += '<br><span class="pz-nota">La disponibilidad real de la fecha se confirma con nuestro equipo.</span>';
+    if (ocupada(s)) txt += '<br><span class="aviso">Esta fecha ya está reservada. Podéis ver el presupuesto igualmente, pero elegid otra fecha en el calendario para reservar.</span>';
+    else txt += '<br><span class="pz-nota">La disponibilidad real de la fecha se confirma con nuestro equipo.</span>';
     $('#fecha-info').innerHTML = txt; $('#fecha-info').hidden = false;
     if (S.menu && !menuDisponible(S.menu)) S.menu = null;
     pintarCalendario(); pintarMenus(); pintarExtras(); calcular();
@@ -141,7 +149,9 @@
   });
 
   /* ---------- Comensales ---------- */
-  function num(id) { var v = parseInt($(id).value, 10); return isNaN(v) || v < 0 ? 0 : Math.min(v, 400); }
+  // Mismos topes que la intranet y el servidor (si no, el presupuesto que reciben por email no cuadraría)
+  var TOPE = { '#n-adultos': 400, '#n-ninos': 200, '#n-prof': 20 };
+  function num(id) { var v = parseInt($(id).value, 10); return isNaN(v) || v < 0 ? 0 : Math.min(v, TOPE[id]); }
   ['#n-adultos', '#n-ninos', '#n-prof'].forEach(function (id) {
     $(id).addEventListener('input', function () { S.adultos = num('#n-adultos'); S.ninos = num('#n-ninos'); S.prof = num('#n-prof'); pintarExtras(); calcular(); });
   });
@@ -390,9 +400,12 @@
     S.adultos = num('#n-adultos'); S.ninos = num('#n-ninos'); S.prof = num('#n-prof');
     (q.get('x') || '').split(',').filter(Boolean).forEach(function (t) {
       var p = t.split(':'); if (!S.extras[p[0]]) return;
-      var st = S.extras[p[0]]; st.on = true; if (p[1]) st.variante = p[1];
+      var st = S.extras[p[0]], def = CAT.extras.filter(function (e) { return e.id === p[0]; })[0];
+      st.on = true;
+      // Solo variantes que existan para ese extra (un enlace manipulado no puede poner el precio de otra cosa)
+      if (p[1] && def.variantes && def.variantes.some(function (v) { return v[0] === p[1]; })) st.variante = p[1];
       st.canje = parseInt(p[2], 10); if (isNaN(st.canje)) st.canje = -1;
-      st.horas = parseInt(p[3], 10) || 1;
+      st.horas = Math.min(Math.max(parseInt(p[3], 10) || 1, 1), 6);
       var hi = $('#x-' + p[0] + '-h'); if (hi) hi.value = st.horas;
       enlazarDjBarra(p[0]);
     });
@@ -405,17 +418,23 @@
 
   /* ---------- Solicitud (lead) ---------- */
   var form = $('#form-presupuesto');
-  var SOLICITUD_URL = 'https://mtmiykxmxcchubgewpyq.supabase.co/functions/v1/solicitud-web';
+  var enviando = false;
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
     var est = $('#lead-estado');
-    if (!S.fecha || !S.menu) { est.className = 'estado-form error'; est.textContent = 'Elige fecha y menú antes de enviar.'; return; }
+    if (enviando) return;
+    if (!S.fecha || !S.menu) { est.className = 'estado-form error'; est.textContent = 'Elegid fecha y menú antes de enviar.'; return; }
+    guardarUrl();
     $('#lead-resumen').value = textoResumen();
+    $('#lead-q').value = location.search.slice(1);
     $('#lead-fecha').value = S.fecha; $('#lead-total').value = ULTIMO ? Math.round(ULTIMO.total) : '';
     $('#lead-adultos').value = S.adultos; $('#lead-ninos').value = S.ninos;
     var md = menuDef(S.menu); $('#lead-menu').value = md ? md.nombre : S.menu;
     var fd = new FormData(form), obj = {};
     fd.forEach(function (v, k) { obj[k] = v; });
+    var correo = String(obj.email || '').trim();
+    var boton = $('button[type="submit"]', form);
+    enviando = true; boton.disabled = true;
     est.className = 'estado-form'; est.textContent = 'Enviando…';
     // 1) A la intranet: entra como visita en el CRM de Mas Llombart
     var aIntranet = fetch(SOLICITUD_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(obj) })
@@ -424,8 +443,19 @@
     var aNetlify = fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(fd).toString() })
       .then(function (r) { if (!r.ok) throw new Error(r.status); });
     Promise.allSettled([aIntranet, aNetlify]).then(function (res) {
-      if (res[0].status === 'fulfilled' || res[1].status === 'fulfilled') {
-        est.className = 'estado-form ok'; est.textContent = '¡Recibido! Os escribimos en menos de 24 h laborables con vuestro presupuesto detallado.'; form.reset(); return;
+      enviando = false; boton.disabled = false;
+      var r0 = res[0].status === 'fulfilled' ? res[0].value : null;
+      if (r0 && r0.email === 'enviado') {
+        est.className = 'estado-form ok';
+        est.textContent = '¡Hecho! Os acabamos de enviar el presupuesto a ' + correo + '. Si en unos minutos no lo veis, mirad en correo no deseado o promociones.' +
+          (r0.fechaOcupada ? ' Ojo: esa fecha ya está reservada; os llamamos para proponeros otras.' : ' Además os llamaremos en menos de 24 h laborables.');
+        form.reset(); return;
+      }
+      if (r0 || res[1].status === 'fulfilled') {
+        // Guardado, pero el email automático no ha salido: lo mandará el equipo a mano (la intranet lo marca)
+        est.className = 'estado-form ok';
+        est.textContent = '¡Recibido! En menos de 24 h laborables os enviamos el presupuesto a ' + correo + ' y os llamamos.';
+        form.reset(); return;
       }
       var m = res[0].reason && res[0].reason.status === 429 && res[0].reason.mensaje;
       est.className = 'estado-form error';
@@ -516,4 +546,12 @@
 
   construirExtras();
   pintarCalendario(); pintarMenus(); pintarExtras(); leerUrl(); calcular();
+  // Fechas vendidas: se piden después de pintar, así el calendario nunca espera a la red
+  try {
+    fetch(SOLICITUD_URL + '?ocupadas=1').then(function (r) { return r.ok ? r.json() : { ocupadas: [] }; }).then(function (j) {
+      (j.ocupadas || []).forEach(function (s) { OCUPADAS[s] = true; });
+      pintarCalendario();
+      if (S.fecha && ocupada(S.fecha)) elegirFecha(S.fecha);
+    }).catch(function () { /* sin conexión: se ofrecen todas */ });
+  } catch (e) { /* navegador antiguo */ }
 })();

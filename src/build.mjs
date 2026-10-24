@@ -437,7 +437,7 @@ paginas.push({
         <p class="pz-nota">Los colores indican la tarifa del día. Lunes y martes la finca está cerrada salvo vísperas y festivos.</p>
         <div class="cal-cab"><button type="button" id="cal-prev" aria-label="Mes anterior">‹</button><span class="cal-mes" id="cal-mes" aria-live="polite"></span><button type="button" id="cal-next" aria-label="Mes siguiente">›</button></div>
         <div class="cal" id="cal"></div>
-        <div class="leyenda"><span><i class="t1"></i>Tarifa 1</span><span><i class="t2"></i>Tarifa 2</span><span><i class="t3"></i>Tarifa 3</span><span><i class="t4"></i>Tarifa 4</span><span><i class="ocu"></i>Ya reservada</span></div>
+        <div class="leyenda"><span><i class="t1"></i>Tarifa 1</span><span><i class="t2"></i>Tarifa 2</span><span><i class="t3"></i>Tarifa 3</span><span><i class="t4"></i>Tarifa 4</span></div>
         <div class="fecha-info" id="fecha-info" hidden aria-live="polite"></div>
       </div>
       <div class="pz-paso">

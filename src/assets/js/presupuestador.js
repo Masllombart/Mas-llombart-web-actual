@@ -202,8 +202,10 @@
         var op = '';
         if (e.variantes) op += '<label class="sr-only" for="' + idc + '-v">Opción</label><select id="' + idc + '-v" data-k="variante"></select>';
         if (e.canjes) op += '<label class="sr-only" for="' + idc + '-c">Forma de pago</label><select id="' + idc + '-c" data-k="canje"></select>';
-        if (e.horas) op += '<label for="' + idc + '-h">Horas</label><input id="' + idc + '-h" data-k="horas" type="number" min="1" max="6" value="1" inputmode="numeric">';
-        if (e.barra) op += '<label for="' + idc + '-p">Personas</label><input id="' + idc + '-p" data-k="personas" type="number" min="1" max="600" inputmode="numeric">';
+        // Cada casilla con su nombre al lado (en el móvil no se separan)
+        var par = 'class="par"';
+        if (e.horas) op += '<span ' + par + '><label for="' + idc + '-h">Horas</label><input id="' + idc + '-h" data-k="horas" type="number" min="1" max="6" value="1" inputmode="numeric"></span>';
+        if (e.barra) op += '<span ' + par + '><label for="' + idc + '-p">Personas</label><input id="' + idc + '-p" data-k="personas" type="number" min="1" max="600" inputmode="numeric"></span>';
         d.innerHTML = '<input class="chk" type="checkbox" id="' + idc + '">' +
           '<label for="' + idc + '"><span class="nom">' + e.nombre + '</span>' + (e.desc ? '<span class="desc">' + e.desc + '</span>' : '') + '<span class="desc nota-bloq"></span></label>' +
           '<span class="precio"></span>' + (op ? '<div class="opciones">' + op + '</div>' : '');
@@ -293,8 +295,9 @@
     var ajuste = S.menu && gastro < minimo ? minimo - gastro : 0;
     // El total es el precio real de lo elegido (como en la intranet): el mínimo y lo que falta se enseñan aparte, debajo
     var total = gastro + otros;
-    pintarResumen({ lin: lin, gastro: gastro, otros: otros, minimo: minimo, ajuste: ajuste, total: total, avisos: avisos, canjeAp: canjeAp });
+    // Primero la dirección: el resumen copia el enlace (si no, iba un cambio por detrás)
     guardarUrl();
+    pintarResumen({ lin: lin, gastro: gastro, otros: otros, minimo: minimo, ajuste: ajuste, total: total, avisos: avisos, canjeAp: canjeAp });
   }
   var ULTIMO = null;
   function pintarResumen(r) {

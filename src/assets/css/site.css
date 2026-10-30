@@ -262,6 +262,8 @@ textarea{min-height:170px;resize:vertical}
 .extra .nom{font-weight:500}
 .extra .desc{font-size:.82rem;color:var(--gris);display:block;line-height:1.5}
 .extra .precio{font-family:var(--serif);font-size:1.3rem;font-weight:500;white-space:nowrap}
+.extra .opciones .pers-tit{flex-basis:100%;font-size:.8rem;color:#6b6457;margin-top:.2rem}
+.extra .opciones .pers-horas{display:flex;gap:.5rem;flex-wrap:wrap}
 .extra .opciones .par{display:inline-flex;align-items:center;gap:.5rem;white-space:nowrap}
 .extra .opciones{grid-column:2 / 4;display:none;gap:.5rem;flex-wrap:wrap;align-items:center}
 .extra.activo .opciones{display:flex}

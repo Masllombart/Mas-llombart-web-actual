@@ -175,12 +175,16 @@
       return { importe: c.precioKey ? precioExtra(c.precioKey) : c.precio, canjeAp: c.aperitivos };
     }
     if (e.porPersona) return { importe: base * Math.max(personas(), e.minPersonas || 0) };
-    if (e.barra) return { importe: base * st.horas * Math.max(personasBarra(st), 50) };
+    if (e.barra) return { importe: base * personasBarra(st).reduce(function (a, n) { return a + Math.max(n, 50); }, 0) };
     if (e.horas) return { importe: base * st.horas };
     return { importe: base };
   }
-  // Personas que pagan la barra libre extra: las que se indiquen o, si no, los adultos (mínimo 50)
-  function personasBarra(st) { return st && st.personas > 0 ? Math.min(st.personas, 600) : S.adultos; }
+  // Personas que se quedan en cada hora extra de barra libre (si no se indica, los adultos); se cobra un mínimo de 50 por hora
+  function personasBarra(st) {
+    var out = [], h = Math.min(Math.max((st && st.horas) || 1, 1), 6);
+    for (var i = 0; i < h; i++) { var n = st && st.personasHoras && st.personasHoras[i]; out.push(n > 0 ? Math.min(n, 600) : S.adultos); }
+    return out;
+  }
   function etiquetaPrecio(e) {
     var key = e.variantes ? S.extras[e.id].variante : e.id, p = precioExtra(key);
     if (p == null) return '';
@@ -205,7 +209,7 @@
         // Cada casilla con su nombre al lado (en el móvil no se separan)
         var par = 'class="par"';
         if (e.horas) op += '<span ' + par + '><label for="' + idc + '-h">Horas</label><input id="' + idc + '-h" data-k="horas" type="number" min="1" max="6" value="1" inputmode="numeric"></span>';
-        if (e.barra) op += '<span ' + par + '><label for="' + idc + '-p">Personas</label><input id="' + idc + '-p" data-k="personas" type="number" min="1" max="600" inputmode="numeric"></span>';
+        if (e.barra) op += '<span class="pers-tit">Personas que se quedan (aprox.):</span><span class="pers-horas" id="' + idc + '-ph"></span>';
         d.innerHTML = '<input class="chk" type="checkbox" id="' + idc + '">' +
           '<label for="' + idc + '"><span class="nom">' + e.nombre + '</span>' + (e.desc ? '<span class="desc">' + e.desc + '</span>' : '') + '<span class="desc nota-bloq"></span></label>' +
           '<span class="precio"></span>' + (op ? '<div class="opciones">' + op + '</div>' : '');
@@ -214,10 +218,23 @@
       c.appendChild(sec);
     });
   }
+  // Una casilla de personas por cada hora extra de barra libre (se rehace al cambiar las horas)
+  function pintarPersonasBarra(e, st) {
+    var cont = $('#x-' + e.id + '-ph'); if (!cont) return;
+    var lista = personasBarra(st), ins = cont.querySelectorAll('input');
+    if (ins.length !== lista.length) {
+      cont.innerHTML = lista.map(function (n, i) {
+        var idp = 'x-' + e.id + '-p' + i;
+        return '<span class="par"><label for="' + idp + '">' + (i + 1) + 'ª hora</label><input id="' + idp + '" data-k="personas" data-i="' + i + '" type="number" min="1" max="600" inputmode="numeric" value="' + n + '"></span>';
+      }).join('');
+      return;
+    }
+    lista.forEach(function (n, i) { if (document.activeElement !== ins[i]) ins[i].value = n; });
+  }
   function pintarExtras() {
     CAT.extras.forEach(function (e) {
       var d = $('.extra[data-id="' + e.id + '"]'), st = S.extras[e.id];
-      if (e.barra) { var pi = $('#x-' + e.id + '-p'); if (pi && document.activeElement !== pi) pi.value = personasBarra(st); }
+      if (e.barra) pintarPersonasBarra(e, st);
       var disp = extraDisponible(e);
       d.classList.toggle('no-disp', !disp);
       if (!disp) { st.on = false; }
@@ -260,7 +277,10 @@
     else if (k === 'variante') st.variante = ev.target.value;
     else if (k === 'canje') st.canje = parseInt(ev.target.value, 10);
     else if (k === 'horas') { var h = parseInt(ev.target.value, 10); st.horas = isNaN(h) || h < 1 ? 1 : Math.min(h, 6); }
-    else if (k === 'personas') { var pe = parseInt(ev.target.value, 10); st.personas = isNaN(pe) || pe < 1 ? 0 : Math.min(pe, 600); }
+    else if (k === 'personas') {
+      var pe = parseInt(ev.target.value, 10), i = parseInt(ev.target.dataset.i, 10);
+      st.personasHoras = personasBarra(st).slice(); st.personasHoras[i] = isNaN(pe) || pe < 1 ? 0 : Math.min(pe, 600);
+    }
     enlazarDjBarra(id);
     pintarExtras(); calcular();
   }
@@ -282,7 +302,7 @@
         if (e.variantes) nom += ' (' + e.variantes.filter(function (v) { return v[0] === st.variante; })[0][1] + ')';
         if (r.canjeAp) { nom += ' · canje ' + r.canjeAp + ' aperitivos'; canjeAp += r.canjeAp; }
         if (e.horas) nom += ' · ' + st.horas + ' h';
-        if (e.barra) nom += ' · ' + Math.max(personasBarra(st), 50) + ' personas';
+        if (e.barra) nom += ' · ' + personasBarra(st).map(function (n) { return Math.max(n, 50); }).join(' + ') + ' personas';
         lin.push([nom, r.importe]);
         if (e.gastro) gastro += r.importe; else otros += r.importe;
       });
@@ -389,7 +409,8 @@
     var ex = [];
     Object.keys(S.extras).forEach(function (id) {
       var st = S.extras[id]; if (!st.on) return;
-      ex.push([id, st.variante || '', st.canje, st.horas].concat(st.personas ? [st.personas] : []).join(':'));
+      var ph = st.personasHoras && st.personasHoras.some(function (n) { return n > 0; }) ? [st.personasHoras.slice(0, st.horas).map(function (n) { return n > 0 ? n : 0; }).join('-')] : [];
+      ex.push([id, st.variante || '', st.canje, st.horas].concat(ph).join(':'));
     });
     if (ex.length) q.set('x', ex.join(','));
     history.replaceState(null, '', location.pathname + '?' + q.toString() + '#presupuestador');
@@ -409,7 +430,11 @@
       st.canje = parseInt(p[2], 10); if (isNaN(st.canje)) st.canje = -1;
       st.horas = Math.min(Math.max(parseInt(p[3], 10) || 1, 1), 6);
       var hi = $('#x-' + p[0] + '-h'); if (hi) hi.value = st.horas;
-      var pe = parseInt(p[4], 10); if (def.barra && pe > 0) st.personas = Math.min(pe, 600);
+      if (def.barra && p[4]) {
+        var lista = p[4].split('-').map(function (x) { return Math.min(Math.max(parseInt(x, 10) || 0, 0), 600); }).slice(0, 6);
+        var phs = lista.length === 1 ? Array.apply(null, Array(st.horas)).map(function () { return lista[0]; }) : lista;
+        if (phs.some(function (n) { return n > 0; })) st.personasHoras = phs;
+      }
       enlazarDjBarra(p[0]);
     });
     var fq = q.get('f');

@@ -182,7 +182,7 @@
   // Personas que se quedan en cada hora extra de barra libre (si no se indica, los adultos); se cobra un mínimo de 50 por hora
   function personasBarra(st) {
     var out = [], h = Math.min(Math.max((st && st.horas) || 1, 1), 6);
-    for (var i = 0; i < h; i++) { var n = st && st.personasHoras && st.personasHoras[i]; out.push(n > 0 ? Math.min(n, 600) : S.adultos); }
+    for (var i = 0; i < h; i++) { var n = st && st.personasHoras && st.personasHoras[i]; out.push(Math.max(n > 0 ? Math.min(n, 600) : S.adultos, 50)); }
     return out;
   }
   function etiquetaPrecio(e) {
@@ -209,7 +209,7 @@
         // Cada casilla con su nombre al lado (en el móvil no se separan)
         var par = 'class="par"';
         if (e.horas) op += '<span ' + par + '><label for="' + idc + '-h">Horas</label><input id="' + idc + '-h" data-k="horas" type="number" min="1" max="6" value="1" inputmode="numeric"></span>';
-        if (e.barra) op += '<span class="pers-tit">Personas que se quedan (aprox.):</span><span class="pers-horas" id="' + idc + '-ph"></span>';
+        if (e.barra) op += '<span class="pers-tit">Personas que se quedan (aprox., mínimo 50 por hora):</span><span class="pers-horas" id="' + idc + '-ph"></span>';
         d.innerHTML = '<input class="chk" type="checkbox" id="' + idc + '">' +
           '<label for="' + idc + '"><span class="nom">' + e.nombre + '</span>' + (e.desc ? '<span class="desc">' + e.desc + '</span>' : '') + '<span class="desc nota-bloq"></span></label>' +
           '<span class="precio"></span>' + (op ? '<div class="opciones">' + op + '</div>' : '');
@@ -225,7 +225,7 @@
     if (ins.length !== lista.length) {
       cont.innerHTML = lista.map(function (n, i) {
         var idp = 'x-' + e.id + '-p' + i;
-        return '<span class="par"><label for="' + idp + '">' + (i + 1) + 'ª hora</label><input id="' + idp + '" data-k="personas" data-i="' + i + '" type="number" min="1" max="600" inputmode="numeric" value="' + n + '"></span>';
+        return '<span class="par"><label for="' + idp + '">' + (i + 1) + 'ª hora</label><input id="' + idp + '" data-k="personas" data-i="' + i + '" type="number" min="50" max="600" inputmode="numeric" value="' + n + '"></span>';
       }).join('');
       return;
     }
@@ -280,6 +280,8 @@
     else if (k === 'personas') {
       var pe = parseInt(ev.target.value, 10), i = parseInt(ev.target.dataset.i, 10);
       st.personasHoras = personasBarra(st).slice(); st.personasHoras[i] = isNaN(pe) || pe < 1 ? 0 : Math.min(pe, 600);
+      // al salir de la casilla, nunca menos de 50 (mientras se escribe se deja teclear «1» para llegar a «120»)
+      if (ev.type === 'change' && !(pe >= 50)) { st.personasHoras[i] = 50; ev.target.value = 50; }
     }
     enlazarDjBarra(id);
     pintarExtras(); calcular();

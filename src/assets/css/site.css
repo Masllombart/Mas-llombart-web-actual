@@ -80,9 +80,12 @@ em,.cursiva{font-family:var(--serif);font-style:italic}
 .panel-menu .redes a{color:#fff}
 .velo{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:90}
 .migas{font-size:.85rem;padding:.4rem 0 0}
+/* La miga va dentro de la cabecera: no hereda su rejilla de 3 columnas (si no, se parte en dos líneas en el móvil) */
+.cabecera .migas{display:block;min-height:0}
 .migas ol{list-style:none;display:flex;flex-wrap:wrap;gap:.35rem;margin:0;padding:0}
 .migas li+li::before{content:"»";margin-right:.35rem}
 .migas a{text-decoration:underline}
+.migas li{flex:0 0 auto;width:auto;margin:0;padding:0}
 
 /* Botones */
 .boton{display:inline-flex;align-items:center;gap:.7rem;font-family:var(--sans);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;font-weight:600;padding:.95rem 1.5rem;border:1px solid var(--acento);background:var(--acento);color:#fff;border-radius:2px;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
@@ -150,7 +153,8 @@ em,.cursiva{font-family:var(--serif);font-style:italic}
 @media (max-width:760px){.ventajas,.ventajas.dos{grid-template-columns:1fr}}
 .ventaja h3{font-family:var(--sans);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;margin:.8rem 0 .7rem}
 .ventaja p{color:var(--gris);font-size:.92rem;margin:0}
-.ventaja .icono-l{width:34px;height:34px;stroke:var(--tinta);fill:none;stroke-width:1.2;margin:0 auto}
+/* Iconos de línea (ventajas y tarjetas de menú): sin esta regla el SVG sale a todo el ancho y relleno de negro */
+.icono-l{display:block;width:34px;height:34px;stroke:var(--tinta);fill:none;stroke-width:1.2;margin:0 auto}
 .ventaja.grande p{font-size:1.05rem;color:var(--tinta)}
 .equipo{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5rem}
 @media (max-width:860px){.equipo{grid-template-columns:1fr}}

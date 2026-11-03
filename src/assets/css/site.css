@@ -363,3 +363,8 @@ body.con-resumen .whatsapp-flotante{bottom:84px}
 .acceso>span{display:block}
 .acceso-boton{display:table!important;margin-top:14px}
 .acceso-ayuda{margin-top:26px}
+
+.justif h2,.justif h3{text-align:left}
+.justif ul{margin:0 0 1rem;padding-left:1.2rem}
+.justif li{margin:.25rem 0}
+.faq+.faq{margin-top:2.5rem}

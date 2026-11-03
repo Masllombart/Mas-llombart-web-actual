@@ -70,7 +70,7 @@ function migas(items) {
 
 /* ---------- Plantilla ---------- */
 const NAV = [
-  ['/', 'Inicio'], ['/la-masia/', 'La Masía'], ['/bodas-en-barcelona-mas-llombart/', 'Bodas en Barcelona'], ['/presupuesto-online/', 'Presupuesto online'], ['/contactanos/', 'Contáctanos'], ['/cotizacion-empresas/', 'Empresas'],
+  ['/', 'Inicio'], ['/la-masia/', 'La Masía'], ['/bodas-en-barcelona-mas-llombart/', 'Bodas en Barcelona'], ['/ceremonias-civiles-masia-barcelona/', 'Ceremonias'], ['/gastronomia-menus-boda/', 'Gastronomía'], ['/presupuesto-online/', 'Presupuesto online'], ['/preguntas-frecuentes/', 'Preguntas frecuentes'], ['/contactanos/', 'Contáctanos'], ['/cotizacion-empresas/', 'Empresas'],
 ];
 
 function layout(p) {
@@ -226,6 +226,7 @@ paginas.push({
       <p class="texto-serif justif">Imagina caminar descalzo entre suspiros, por un pasillo de plantas vivas que te lleva al corazón de este claro. Bajo un techo de luces cálidas, rodeado de naturaleza y miradas cómplices, el “sí, quiero” suena distinto.</p>
       <p class="texto-serif">Aquí, cada hoja se convierte en testigo y cada rayo de sol bendice el momento.</p>
       <p class="cita centro">Este es nuestro plan A: una ceremonia en exterior donde todo florece, incluso los nervios más bonitos.</p>
+      <p class="centro"><a href="/ceremonias-civiles-masia-barcelona/">Todo sobre nuestras ceremonias civiles</a></p>
       ${foto('2025/06/massllombart-ceremonia-aire-libre-boda.jpeg', 'Pasillo de ceremonia al aire libre con guirnaldas de luces en Mas Llombart', 'vertical')}
     </div>
   </div>
@@ -267,6 +268,7 @@ ${bandaPresupuesto}
   </div>
   <div class="contenedor">
     <p class="u20 frase grande"><span class="subraya negro">Porque un gran día merece una gran mesa.</span></p>
+    <p class="centro"><a href="/gastronomia-menus-boda/">Descubrid nuestros menús de boda</a></p>
     <div class="trio">
       ${foto('2025/06/masllombart-buffet-boda-barcelona.jpeg', 'Buffet de quesos y frutas en una boda en Mas Llombart, Barcelona')}
       ${foto('2025/06/masllombart-mesa-charcuteria-boda-barcelona.jpeg', 'Mesa de charcutería artesanal en una boda en Mas Llombart, Barcelona', 'centro-alta')}
@@ -347,6 +349,7 @@ ${bandaContacto('en Sant Fost de Campsentelles')}
     <h2>Preguntas frecuentes sobre Mas Llombart</h2>
     ${FAQ_MASIA.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('\n    ')}
   </div>
+  <div class="estrecho centro"><p><a href="/preguntas-frecuentes/">Ver todas las preguntas frecuentes</a></p></div>
 </section>`,
 });
 
@@ -656,6 +659,263 @@ paginas.push({
   </div>
 </section>`,
 });
+
+/* ---------- Páginas SEO (noviembre 2026) ---------- */
+const P27 = precios['2027'], P28 = precios['2028'];
+const faqSchema = (lista) => ({ '@type': 'FAQPage', mainEntity: lista.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a.replace(/<[^>]+>/g, '') } })) });
+const faqHtml = (titulo, lista) => `<div class="contenedor faq"><h2>${titulo}</h2>
+    ${lista.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join('\n    ')}
+  </div>`;
+const N = '2026/11/';
+
+// CEREMONIAS CIVILES
+const FAQ_CEREMONIA = [
+  ['¿Dónde se celebra la ceremonia?', 'En los jardines de la masía, al aire libre, en un pasillo de plantas vivas bajo un techo de luces cálidas. Si el tiempo no acompaña, la ceremonia pasa a nuestro espacio interior acristalado, con techos de madera y vistas a las cascadas.'],
+  ['¿Hacéis ceremonias civiles y religiosas?', 'Sí. Celebramos ceremonias civiles y también religiosas, y la religiosa se monta con la misma decoración que la civil.'],
+  [`¿Cuánto cuesta la ceremonia en Mas Llombart?`, `La ceremonia en nuestros jardines cuesta ${eur(P27.extras.ceremonia)} en 2027 y ${eur(P28.extras.ceremonia)} en 2028 (IVA incluido). Incluye las sillas plegables blancas, la decoración floral y la música personalizada con DJ.`],
+  ['¿Podemos tener un oficiante?', `Sí. Si no tenéis a un amigo o familiar que la oficie, podemos encargarnos con un ceremoniante (actor) por ${eur(P27.extras.ceremoniante)} en 2027 y ${eur(P28.extras.ceremoniante)} en 2028.`],
+  ['¿La ceremonia civil tiene validez legal?', 'Depende de la disponibilidad del Ayuntamiento. En la visita os explicamos las opciones para vuestro caso.'],
+  ['¿Podemos cambiar la decoración de la ceremonia?', 'Sí, siempre que no se supere el presupuesto destinado a esa partida.'],
+  ['¿Cuánto dura la ceremonia?', 'Calculad alrededor de 1 hora y cuarto entre la ceremonia y las fotografías con los invitados. Después empieza el aperitivo en el jardín.'],
+  ['¿Puede venir nuestra mascota a la ceremonia?', 'Sí, siempre que esté bajo la supervisión de un cuidador durante todo el evento.'],
+];
+paginas.push({
+  ruta: '/ceremonias-civiles-masia-barcelona/', archivo: 'ceremonias-civiles-masia-barcelona/index.html',
+  titulo: 'Ceremonias civiles al aire libre en una masía de Barcelona | Mas Llombart',
+  descripcion: 'Ceremonia civil o religiosa en los jardines de una masía del siglo XIV a 15 minutos de Barcelona, con plan B interior acristalado. Precio, qué incluye y dudas.',
+  heroImg: '2025/06/ceremonia-exterior-mas-llombart-jardin.jpeg', imagenOg: '2025/06/ceremonia-exterior-mas-llombart-jardin.jpeg',
+  migas: [['Portada', '/'], ['Ceremonias civiles', '/ceremonias-civiles-masia-barcelona/']],
+  schema: [faqSchema(FAQ_CEREMONIA)],
+  cuerpo: `${hero('2025/06/ceremonia-exterior-mas-llombart-jardin.jpeg', 'Ceremonia civil al aire libre en el jardín de Mas Llombart, masía para bodas en Barcelona', `
+    <span class="lema">Ceremonias</span>
+    <h1>Ceremonias civiles al aire libre<span class="u0 h1-pequena">en una masía del siglo XIV, a 15 minutos de Barcelona</span></h1>
+    <a class="boton blanco" href="/contactanos/">Venid a verla</a>`)}
+<section class="seccion">
+  <div class="contenedor dos-col">
+    <div class="justif">
+      <h2>Un «sí, quiero» entre jardines</h2>
+      <p>En <strong>Mas Llombart</strong> la ceremonia no es un trámite antes del banquete: es el momento que da sentido a todo el día. La celebramos en los <strong>más de 5.500 m² de jardines</strong> de la masía, en un claro rodeado de vegetación al que se llega por un pasillo de plantas vivas, bajo un techo de luces cálidas.</p>
+      <p>Celebramos <strong>ceremonias civiles y religiosas</strong>, con la misma decoración en ambos casos, y solo <strong>un evento al día</strong>: el jardín, el equipo y la masía son solo para vosotros.</p>
+    </div>
+    ${foto('2025/06/massllombart-ceremonia-aire-libre-boda.jpeg', 'Pasillo de ceremonia civil al aire libre con guirnaldas de luces en Mas Llombart', 'vertical', 'eager')}
+  </div>
+  <div class="u13 contenedor dos-col invertida">
+    <div class="justif">
+      <h2>¿Y si llueve? Plan B con la misma emoción</h2>
+      <p>Nuestro plan B no es un salón cualquiera. Es un <strong>espacio interior acristalado</strong>, con techos de madera y vistas a las cascadas, preparado con la misma decoración que el jardín. La decisión se toma el mismo día, con calma, y los invitados no notan el cambio más que en el paisaje.</p>
+      <p>Lo mismo ocurre con el aperitivo: también tiene su <strong>plan B en interior</strong>, incluido en todos los presupuestos.</p>
+    </div>
+    ${foto('2025/06/masllombart-ceremonia-jardin-techo-luces-cascada.jpeg', 'Espacio interior acristalado para ceremonias con techo de madera y cascada en Mas Llombart')}
+  </div>
+</section>
+<section class="seccion">
+  ${tituloXL('Qué incluye', 'La ceremonia en nuestros jardines')}
+  <div class="u13 contenedor ventajas">
+    <div class="ventaja">${ICONOS.hoja}<h3>Decoración floral</h3><p>Decoración floral del espacio de ceremonia, que podéis adaptar a vuestro estilo dentro del presupuesto de la partida.</p></div>
+    <div class="ventaja">${ICONOS.grupo}<h3>Sillas para los invitados</h3><p>Sillas plegables blancas para todos vuestros invitados, montadas y recogidas por nuestro equipo.</p></div>
+    <div class="ventaja">${ICONOS.estrella}<h3>Música con DJ</h3><p>Música personalizada con DJ para la entrada, los momentos especiales y la salida.</p></div>
+  </div>
+  <div class="estrecho centro">
+    <p class="u13">Precio de la ceremonia: <strong>${eur(P27.extras.ceremonia)}</strong> en 2027 y <strong>${eur(P28.extras.ceremonia)}</strong> en 2028, IVA incluido. Si queréis que alguien la oficie, contamos con un <strong>ceremoniante (actor)</strong>.</p>
+    <a class="boton" href="/presupuesto-online/">Calcular el presupuesto con ceremonia</a>
+  </div>
+</section>
+<section class="u17 seccion">
+  <div class="contenedor galeria">
+    ${foto('2025/06/masllombart-altar-exterior-arco-flores.jpeg', 'Altar exterior con arco de flores para una ceremonia civil en Mas Llombart', 'alta')}
+    ${foto('2025/06/masllombart-boda-jardin.jpeg', 'Pasillo de ceremonia entre setos en el jardín de Mas Llombart', 'alta')}
+    ${foto('2025/06/masllombart-ceremonia-nocturna-exterior-si-quiero.jpeg', 'Ceremonia nocturna al aire libre con guirnaldas de luces en Mas Llombart', 'alta')}
+  </div>
+</section>
+${bandaContacto()}
+<section class="seccion">
+  ${faqHtml('Preguntas frecuentes sobre la ceremonia', FAQ_CEREMONIA)}
+  <div class="estrecho centro"><p>¿Más dudas? Mirad nuestras <a href="/preguntas-frecuentes/">preguntas frecuentes</a> o descubrid <a href="/gastronomia-menus-boda/">la gastronomía de Mas Llombart</a>.</p></div>
+</section>`,
+});
+
+// GASTRONOMÍA
+const FAQ_GASTRO = [
+  ['¿Tenéis cocina propia o trabajáis con un catering?', 'Cocina totalmente propia y artesanal, con equipo fijo de cocina y pastelera propia. Elaboramos en casa el pan, la pastelería, los sorbetes y los helados.'],
+  ['¿Qué tipos de menú de boda ofrecéis?', 'Menú tradicional (aperitivo, primer plato, sorbete, segundo y postre), aperitivo completo (Gran Aperitivo de 42 referencias, sorbete, segundo y postre) y solo aperitivo con buffets y showcookings. Los domingos también tenemos el formato tardeo «Viva la Vida».'],
+  ['¿Cuánto cuesta el menú de boda?', `En 2027 los menús de banquete van desde ${eur(P27.menus['8'][3])} por invitado (Menú 8, en fechas de Tarifa 4) y el formato de domingo «Viva la Vida» desde ${eur(P27.menus['9'])}. En 2028, desde ${eur(P28.menus['8'][3])} y ${eur(P28.menus['9'])}. IVA incluido. El precio exacto depende de la fecha y del menú: lo podéis calcular en el presupuestador online.`],
+  ['¿Adaptáis el menú a alergias y dietas especiales?', 'Sí, sin problema: celíacos, veganos, vegetarianos, halal y cualquier alergia o intolerancia. Los invitados con dieta especial se identifican al llegar a la finca para que su menú les llegue sin errores.'],
+  ['¿Hay prueba de menú?', `Sí, incluida. Para la pareja en todos los presupuestos, y para 4 o 6 personas en los presupuestos más altos. Cada acompañante adicional cuesta ${eur(catalogo.pruebaMenu.extra['2027'])} en 2027.`],
+  ['¿Cuánto cuesta el menú infantil?', `${eur(P27.infantil)} en 2027 y ${eur(P28.infantil)} en 2028, todo incluido, para niños de hasta 12 años.`],
+  ['¿Podemos modificar los platos del menú?', 'Sí, podéis cambiar cualquier plato siempre que no afecte a la calidad. Lo que no se cambia es la estructura del menú.'],
+  ['¿Qué bebida incluye el menú?', 'Barra libre en el aperitivo (refrescos, agua, cerveza, vermouth, vinos y cava), bodega en el salón, cafés y licores, y 2 horas de barra libre con DJ en la discoteca.'],
+];
+paginas.push({
+  ruta: '/gastronomia-menus-boda/', archivo: 'gastronomia-menus-boda/index.html',
+  titulo: 'Menús de boda con cocina propia en Barcelona | Mas Llombart',
+  descripcion: 'Gastronomía de autor hecha en casa para bodas en Barcelona: menú tradicional, aperitivo completo o solo aperitivo, buffets y showcookings. Dietas especiales incluidas.',
+  heroImg: N + 'masllombart-vieiras-aperitivo-boda.jpg', imagenOg: N + 'masllombart-vieiras-aperitivo-boda.jpg',
+  migas: [['Portada', '/'], ['Gastronomía', '/gastronomia-menus-boda/']],
+  schema: [faqSchema(FAQ_GASTRO)],
+  cuerpo: `${hero(N + 'masllombart-vieiras-aperitivo-boda.jpg', 'Bandeja de vieiras servidas en el aperitivo de una boda en Mas Llombart', `
+    <span class="lema">Gastronomía</span>
+    <h1>Menús de boda con cocina propia<span class="u0 h1-pequena">todo hecho en casa, del primer pan al último pastel</span></h1>
+    <a class="boton blanco" href="/presupuesto-online/">Ver menús y precios</a>`)}
+<section class="seccion">
+  <div class="contenedor dos-col">
+    <div class="justif">
+      <h2>En Mas Llombart no hay catering: hay una cocina</h2>
+      <p>La comida es lo que más recuerdan los invitados, y por eso no la dejamos en manos de nadie. Tenemos <strong>cocina propia y artesanal</strong>, con un equipo fijo y <strong>pastelera propia</strong>. Amasamos el pan, hacemos los sorbetes, los helados, los fondos, las salsas y los pasteles.</p>
+      <p>Es una <strong>cocina de autor de alma mediterránea</strong> y técnica actual, pensada para un banquete real: con invitados veganos, celíacos, con alergias o que simplemente comen distinto. Todos comen bien, y todos comen a la vez.</p>
+    </div>
+    ${foto(N + 'masllombart-bandeja-aperitivos-boda.jpg', 'Camarero sirviendo una bandeja de aperitivos en el jardín de Mas Llombart', '', 'eager')}
+  </div>
+</section>
+<section class="seccion">
+  ${tituloXL('Formatos', 'Tres maneras de vivir el banquete')}
+  <div class="u13 contenedor tarjetas">
+    <div class="tarjeta">${ICONOS.plato}<h3>Menú tradicional</h3><span class="sub">El gran banquete de siempre.</span><p>Aperitivo de Gala de 24 referencias, primer plato, sorbete casero, segundo plato y postre.</p></div>
+    <div class="tarjeta">${ICONOS.copa}<h3>Aperitivo completo</h3><span class="sub">Más dinámico, igual de generoso.</span><p>Gran Aperitivo Mas Llombart de 42 referencias, sorbete casero, segundo plato y postre.</p></div>
+    <div class="tarjeta">${ICONOS.hoja}<h3>Solo aperitivo</h3><span class="sub">Una boda ágil, de pie y al aire libre.</span><p>Gran Aperitivo con buffet de quesos, parrillada de carnes y marisco, showcooking de arroces y extras en la discoteca.</p></div>
+  </div>
+  <div class="estrecho centro"><p class="u13">Los domingos, además, el formato tardeo <strong>«Viva la Vida»</strong>: cocktail, buffets, showcookings, pasteles y discoteca al aire libre.</p></div>
+</section>
+<section class="seccion">
+  <div class="contenedor trio">
+    ${foto(N + 'masllombart-parrillada-aperitivo-boda.jpg', 'Brochetas y verduras a la parrilla en el showcooking de una boda en Mas Llombart')}
+    ${foto(N + 'masllombart-showcooking-arroces-boda.jpg', 'Platos del showcooking de arroces en una boda en Mas Llombart', 'centro-alta')}
+    ${foto(N + 'masllombart-almejas-parrilla-boda.jpg', 'Almejas y zamburiñas a la brasa en el aperitivo de una boda en Mas Llombart')}
+  </div>
+  <div class="u14 contenedor dos-col">
+    <div class="justif">
+      <h2>Buffets y showcookings en el aperitivo</h2>
+      <p>El aperitivo es nuestro punto fuerte. Además de los platos que sirven los camareros, podéis sumar <strong>buffets y showcookings</strong> que se preparan delante de los invitados:</p>
+      <ul>
+        <li>Buffet japonés de sushi, también con sushiman en directo</li>
+        <li>Showcooking de arroces y fideuà</li>
+        <li>Carnes a la brasa, zamburiñas, almejas y navajas</li>
+        <li>Buffet de quesos, de ahumados y de foie artesano</li>
+        <li>Jamón ibérico al corte y embutidos catalano-ibéricos</li>
+        <li>Rincón gallego, buffet de vermouth, de cervezas y de vinos</li>
+      </ul>
+      <p>Y para la discoteca: candy bar, crepes, hot dogs, hamburguesas, pizzas o chocolate con churros. Todos los precios están en el <a href="/presupuesto-online/">presupuestador online</a>.</p>
+    </div>
+    ${foto(N + 'masllombart-buffet-sushi-boda.jpg', 'Buffet de sushi en el aperitivo de una boda en Mas Llombart')}
+  </div>
+</section>
+<section class="frase">
+  <div class="estrecho">
+    <p class="grande">Panes, sorbetes, helados y pasteles:<br><span class="subraya amarillo">todo sale de nuestra cocina.</span></p>
+  </div>
+</section>
+<section class="u17 seccion">
+  <div class="contenedor galeria">
+    ${foto(N + 'masllombart-buffet-quesos-boda.jpg', 'Buffet de quesos con tablas y panes en una boda en Mas Llombart', 'alta')}
+    ${foto(N + 'masllombart-trufas-aperitivo-boda.jpg', 'Bocados del aperitivo de Gala servidos sobre mármol en Mas Llombart', 'alta')}
+    ${foto(N + 'masllombart-stand-vinos-cavas-boda.jpg', 'Stand de vinos y cavas en el aperitivo de una boda en Mas Llombart', 'alta')}
+    ${foto(N + 'masllombart-mini-hamburguesas-aperitivo.jpg', 'Mini hamburguesas del aperitivo de una boda en Mas Llombart', 'alta')}
+    ${foto(N + 'masllombart-terrina-aperitivo-boda.jpg', 'Terrina con crujiente de frutos secos en el aperitivo de Mas Llombart', 'alta')}
+    ${foto(N + 'masllombart-bocados-dulces-boda.jpg', 'Bocados dulces caseros de la pastelería de Mas Llombart', 'alta')}
+  </div>
+</section>
+<section class="seccion">
+  <div class="estrecho centro">
+    <h2>Dietas especiales, sin dramas</h2>
+    <p class="justif">Celíacos, veganos, vegetarianos, halal, alergias e intolerancias: <strong>adaptamos el menú sin coste añadido</strong> y sin que nadie coma «el plato aparte». Lo indicáis en la intranet de novios, la cocina lo prepara y cada invitado se identifica al llegar para que su plato le llegue sin errores.</p>
+    <p class="justif">Antes de la boda hacéis la <strong>prueba de menú</strong> para decidir los platos con calma: incluida para la pareja, y para 4 o 6 personas en los presupuestos más altos.</p>
+    <div class="cta-centro"><div class="botones">
+      <a class="boton" href="/presupuesto-online/">Calcular nuestro presupuesto</a>
+      <a class="boton contorno" href="/docs/dossier-bodas-2027-mas-llombart.pdf">Dossier de menús 2027</a>
+    </div></div>
+  </div>
+</section>
+${bandaContacto()}
+<section class="seccion">
+  ${faqHtml('Preguntas frecuentes sobre los menús de boda', FAQ_GASTRO)}
+  <div class="estrecho centro"><p>Más información en <a href="/ceremonias-civiles-masia-barcelona/">ceremonias civiles</a> y <a href="/preguntas-frecuentes/">preguntas frecuentes</a>.</p></div>
+</section>`,
+});
+
+// PREGUNTAS FRECUENTES
+const FAQ_GENERAL = [
+  ['Precio y reserva', [
+    ['¿Cuánto cuesta una boda en Mas Llombart?', `Depende de la fecha, del número de invitados y del menú. En 2027 el menú de banquete va desde ${eur(P27.menus['8'][3])} por invitado (Menú 8, fechas de Tarifa 4) y en 2028 desde ${eur(P28.menus['8'][3])}, IVA incluido. Viernes y domingos tienen ventajas frente a los sábados, y diciembre y febrero tienen tarifas propias. Podéis calcularlo al momento en el <a href="/presupuesto-online/">presupuestador online</a>.`],
+    ['¿Hay un mínimo de invitados?', 'No exigimos un mínimo de invitados, sino un presupuesto mínimo que varía según la fecha. Si no se alcanza con los menús, se completa con extras gastronómicos para el aperitivo o la discoteca.'],
+    ['¿Qué incluye el precio del menú?', 'La finca en exclusiva, el IVA, la planificación, el cocktail de bienvenida, la barra libre del aperitivo, la bodega, los cafés y licores, la decoración floral, minutas y seating plan, la tarta, 2 horas de barra libre con DJ en la discoteca, los planes B en interior y el parking. La lista completa está en el <a href="/presupuesto-online/">presupuestador</a>.'],
+    ['¿Cómo se reserva la fecha?', `Con una señal de ${eur(P27.senal)}. El resto se paga por transferencia como máximo 72 horas antes de la boda. Las horas extra de barra libre se pagan al terminar.`],
+    ['¿Cuánto cuesta el menú infantil?', `${eur(P27.infantil)} en 2027 y ${eur(P28.infantil)} en 2028, todo incluido, para niños de hasta 12 años.`],
+  ]],
+  ['La masía', [
+    ['¿Dónde está Mas Llombart?', 'En Sant Fost de Campsentelles (Barcelona), en la Avinguda de la Conreria, 16, a unos 15 minutos de Barcelona.'],
+    ['¿Cuántos invitados caben?', 'Nuestro salón panorámico, de madera y cristal, admite hasta 210 invitados. Para bodas más pequeñas contamos con un segundo salón en la masía de piedra.'],
+    ['¿Cuántas bodas hacéis al día?', 'Una sola. La finca y el equipo son para vosotros todo el día.'],
+    ['¿Hay parking?', 'Sí, parking privado y gratuito junto a la masía.'],
+    ['¿Tenéis alojamiento?', 'No tenemos alojamiento en la finca, pero hay hoteles cerca. Os pasamos opciones cuando reservéis.'],
+    ['¿Se puede hacer la discoteca en el jardín?', 'No, la discoteca se hace en interior.'],
+  ]],
+  ['El día de la boda', [
+    ['¿A qué hora empieza y termina la boda?', 'No hay una hora fija: preparamos el evento para la hora que acordemos y trabajamos hasta que terminan los servicios contratados. Abrimos las puertas 45 minutos antes del inicio previsto.'],
+    ['¿Cuánto dura una boda?', 'Como referencia: la ceremonia y las fotos con los invitados, alrededor de 1 hora y cuarto; el aperitivo, entre 1 hora y cuarto y 2 horas y cuarto según el formato; el banquete en sala, entre 2 horas y cuarto y 3 horas; y después, la discoteca.'],
+    ['¿Podemos ampliar la barra libre?', `Sí. Incluye 2 horas, y la hora extra cuesta ${eur(P27.extras.horaBarra)} por persona y la de DJ ${eur(P27.extras.horaDJ)} en 2027. Recomendamos decidirlo en el momento, según el ambiente.`],
+    ['¿Podemos traer un grupo de música?', 'Sí, avisándonos antes. No se permiten instrumentos de percusión y el equipo debe conectarse a nuestro amplificador.'],
+    ['¿Podemos traer proveedores externos?', 'Sí, avisando antes y con nuestra aceptación. La empresa externa debe presentar su seguro de responsabilidad civil y su alta de actividad.'],
+    ['¿Pueden venir mascotas?', 'Sí, siempre bajo la supervisión de un cuidador.'],
+    ['¿Hacéis bodas en domingo por la tarde?', 'Sí, cuando el lunes es festivo nacional y los domingos de agosto. Los domingos también tenemos el formato tardeo «Viva la Vida».'],
+  ]],
+  ['Visitas', [
+    ['¿Podemos visitar la masía?', 'Sí, con cita previa (lunes y martes cerrado). Pedid cita en la página de <a href="/contactanos/">contacto</a>, por WhatsApp o por teléfono.'],
+    ['¿Cómo sabemos si nuestra fecha está libre?', 'Escribidnos con la fecha que os interesa y os contestamos personalmente. Por respeto a las parejas que ya han reservado, no publicamos el calendario de ocupación.'],
+  ]],
+];
+paginas.push({
+  ruta: '/preguntas-frecuentes/', archivo: 'preguntas-frecuentes/index.html',
+  titulo: 'Preguntas frecuentes sobre bodas en Mas Llombart | Precio, capacidad y horarios',
+  descripcion: 'Todo lo que nos preguntan las parejas: cuánto cuesta una boda en Mas Llombart, cuántos invitados caben, horarios, parking, alojamiento, menú infantil y cómo reservar.',
+  imagenOg: '2025/06/masllombart-boda-anochecer-novios-edificio-iluminado.jpeg',
+  migas: [['Portada', '/'], ['Preguntas frecuentes', '/preguntas-frecuentes/']],
+  schema: [faqSchema(FAQ_GENERAL.flatMap(([, l]) => l))],
+  cuerpo: `<section class="seccion">
+  <div class="estrecho centro">
+    <h1>Preguntas frecuentes</h1>
+    <p class="lead">Las dudas que más nos plantean las parejas antes de reservar su boda en Mas Llombart. Si no encontráis la vuestra, <a href="/contactanos/">escribidnos</a>.</p>
+  </div>
+  ${FAQ_GENERAL.map(([t, l]) => faqHtml(t, l)).join('\n  ')}
+  <div class="estrecho centro"><p>Más en detalle: <a href="/ceremonias-civiles-masia-barcelona/">ceremonias civiles</a>, <a href="/gastronomia-menus-boda/">gastronomía y menús</a> y <a href="/la-masia/">la masía</a>.</p></div>
+</section>
+${bandaPresupuesto}`,
+});
+
+// BODAS REALES — se generan solo cuando hay alguna en src/data/bodas-reales.json
+// Cada boda: { slug, titulo, publicada: 'AAAA-MM-DD', resumen, portada, portadaAlt, fotos: [[ruta, alt]], parrafos: ['…'] }
+// Solo bodas YA celebradas: nunca se anuncian fechas futuras.
+const bodasReales = existsSync(join(RAIZ, 'src/data/bodas-reales.json')) ? leer('bodas-reales.json').filter((b) => b.publicada && b.publicada <= HOY).sort((a, b) => b.publicada.localeCompare(a.publicada)) : [];
+if (bodasReales.length) {
+  paginas.push({
+    ruta: '/bodas-reales/', archivo: 'bodas-reales/index.html',
+    titulo: 'Bodas reales en Mas Llombart | Masía para bodas en Barcelona',
+    descripcion: 'Bodas reales celebradas en Mas Llombart: ceremonias, aperitivos y decoración de parejas que eligieron nuestra masía cerca de Barcelona.',
+    imagenOg: bodasReales[0].portada, actualizado: bodasReales[0].publicada,
+    migas: [['Portada', '/'], ['Bodas reales', '/bodas-reales/']],
+    cuerpo: `<section class="seccion">
+  <div class="estrecho centro"><h1>Bodas reales</h1><p class="lead">Parejas que celebraron su boda en Mas Llombart, contadas con sus fotos.</p></div>
+  <div class="u13 contenedor tarjetas">
+    ${bodasReales.map((b) => `<a class="tarjeta" href="/bodas-reales/${b.slug}/">${foto(b.portada, b.portadaAlt || b.titulo)}<h3>${esc(b.titulo)}</h3><p>${esc(b.resumen)}</p></a>`).join('\n    ')}
+  </div>
+</section>
+${bandaContacto()}`,
+  });
+  for (const b of bodasReales) {
+    const ruta = `/bodas-reales/${b.slug}/`;
+    paginas.push({
+      ruta, archivo: `bodas-reales/${b.slug}/index.html`,
+      titulo: `${b.titulo} | Bodas reales en Mas Llombart`, descripcion: b.resumen,
+      imagenOg: b.portada, actualizado: b.publicada,
+      migas: [['Portada', '/'], ['Bodas reales', '/bodas-reales/'], [b.titulo, ruta]],
+      schema: [{ '@type': 'Article', headline: b.titulo, description: b.resumen, datePublished: b.publicada, image: SITIO + '/wp-content/uploads/' + b.portada, author: { '@id': SITIO + '/#negocio' }, publisher: { '@id': SITIO + '/#negocio' }, mainEntityOfPage: SITIO + ruta }],
+      cuerpo: `<article class="seccion">
+  <div class="estrecho"><h1 class="centro">${esc(b.titulo)}</h1>${b.parrafos.map((t) => `<p class="justif">${esc(t)}</p>`).join('')}</div>
+  <div class="u13 contenedor galeria">${(b.fotos || []).map(([r, a]) => foto(r, a, 'alta')).join('')}</div>
+  <div class="estrecho centro"><p><a href="/bodas-reales/">Ver más bodas reales</a> · <a href="/presupuesto-online/">Calcular nuestro presupuesto</a></p></div>
+</article>
+${bandaContacto()}`,
+    });
+  }
+}
 
 // LEGALES
 const EMPRESA = `<p><strong>Sinsofood 1996, S.L.</strong> · CIF B67342568<br>Domicilio social: C/ Turó de la Trinitat, 2-4-6, 3º 3ª · 08002 Barcelona<br>Establecimiento: Mas Llombart, Avda. de la Conreria, 16 · 08105 Sant Fost de Campsentelles (Barcelona)<br>Email: <a href="mailto:info@masllombart.com">info@masllombart.com</a> · Teléfono: <a href="tel:+34672494212">672 494 212</a><br>Datos registrales: [PENDIENTE: Registro Mercantil de Barcelona, tomo, folio, hoja]</p>`;

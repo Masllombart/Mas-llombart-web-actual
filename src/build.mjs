@@ -708,16 +708,17 @@ paginas.push({
   ruta: '/area-clientes/', archivo: 'area-clientes/index.html', titulo: 'Área de clientes | Mas Llombart', descripcion: 'Acceso a la intranet de novios y clientes de Mas Llombart.', noindex: true, sinCierre: true,
   cuerpo: `<section class="seccion"><div class="estrecho centro">
 <h1>Área de clientes</h1>
-<p class="lead">Entrad en vuestra intranet para preparar la boda o el evento con nosotros.</p>
+<p class="lead">Durante un tiempo funcionan las dos intranets. Entrad en la que uséis para preparar vuestra boda o evento.</p>
 <div class="accesos">
   <a href="${INTRANET_NUEVA}" rel="noopener" class="acceso acceso-principal">
-    <strong class="acceso-titulo">Intranet de Mas Llombart</strong>
-    <span>Si os hemos enviado el enlace de acceso por email, entrad aquí con vuestro email y contraseña.</span>
+    <strong class="acceso-titulo">Intranet nueva</strong>
+    <span>Con el email y la contraseña de la intranet nueva.</span>
     <span class="boton acceso-boton">Entrar</span>
   </a>
-  <a href="${INTRANET_ANTIGUA}" rel="noopener" class="acceso">
+  <a href="${INTRANET_ANTIGUA}" rel="noopener" class="acceso acceso-principal">
     <strong class="acceso-titulo">Intranet anterior</strong>
-    <span>Si todavía no habéis recibido el nuevo acceso, seguid entrando aquí como siempre.</span>
+    <span>Con vuestro usuario y contraseña de siempre.</span>
+    <span class="boton acceso-boton">Entrar</span>
   </a>
 </div>
 <p class="acceso-ayuda">¿Dudas para entrar? Llamadnos al <a href="tel:+34672494212">672 494 212</a> o escribidnos por <a href="${WA}" target="_blank" rel="noopener">WhatsApp</a>.</p>

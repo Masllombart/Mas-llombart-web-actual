@@ -723,8 +723,11 @@ paginas.push({
 <section class="u17 seccion">
   <div class="contenedor galeria">
     ${foto('2025/06/masllombart-altar-exterior-arco-flores.jpeg', 'Altar exterior con arco de flores para una ceremonia civil en Mas Llombart', 'alta')}
-    ${foto('2025/06/masllombart-boda-jardin.jpeg', 'Pasillo de ceremonia entre setos en el jardín de Mas Llombart', 'alta')}
+    ${foto(N + 'masllombart-pasillo-ceremonia-civil-jardin.jpg', 'Pasillo de ceremonia civil con sillas blancas y guirnaldas de luces en el jardín de Mas Llombart', 'alta')}
     ${foto('2025/06/masllombart-ceremonia-nocturna-exterior-si-quiero.jpeg', 'Ceremonia nocturna al aire libre con guirnaldas de luces en Mas Llombart', 'alta')}
+    ${foto(N + 'masllombart-decoracion-floral-ceremonia.jpg', 'Decoración floral de una ceremonia civil en los jardines de Mas Llombart', 'alta')}
+    ${foto(N + 'masllombart-flores-ceremonia-boda.jpg', 'Detalle de flores y pampas en la ceremonia de una boda en Mas Llombart', 'alta')}
+    ${foto(N + 'masllombart-firma-ceremonia-civil.jpg', 'Bolígrafo para la firma de una ceremonia civil en Mas Llombart', 'alta')}
   </div>
 </section>
 ${bandaContacto()}

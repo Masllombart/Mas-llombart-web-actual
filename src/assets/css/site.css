@@ -348,3 +348,14 @@ body.con-resumen .whatsapp-flotante{bottom:84px}
   .cabecera .contenedor{min-height:78px}
 }
 .banda.foto-visible img.fondo{opacity:.4}
+
+/* Área de clientes: elegir intranet (nueva o anterior) */
+.accesos{display:grid;gap:16px;max-width:520px;margin:28px auto 0;text-align:left}
+.acceso{display:block;padding:18px 24px;border-radius:14px;background:#fff;border:1px solid #d9cfbd;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s}
+.acceso:hover{border-color:#b8966e;transform:translateY(-2px)}
+.acceso-principal{padding:22px 24px;border:2px solid #b8966e}
+.acceso-titulo{display:block;font-size:1.15rem;margin-bottom:4px}
+.acceso-principal .acceso-titulo{font-size:1.3rem}
+.acceso>span{display:block}
+.acceso-boton{display:table!important;margin-top:14px}
+.acceso-ayuda{margin-top:26px}

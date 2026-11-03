@@ -25,6 +25,9 @@ const TEL = [
 const telHref = (t) => 'tel:+34' + t.replace(/\s/g, '');
 // Intranet de novios: de momento la ANTIGUA (eventos.masllombart.com). Cuando la nueva esté lista, se apunta ese subdominio a Netlify y este enlace no cambia.
 const INTRANET = 'https://eventos.masllombart.com';
+// Mientras conviven las dos intranets, el muñequito lleva a /area-clientes/ para elegir: la nueva (Netlify) o la anterior.
+const INTRANET_NUEVA = 'https://masllombart-intranet.netlify.app';
+const INTRANET_ANTIGUA = INTRANET;
 const WA = 'https://api.whatsapp.com/send?phone=34672494212&text=' + encodeURIComponent('Hola, vengo de la web de Mas Llombart y me gustaría información para nuestra boda.');
 const IG = 'https://www.instagram.com/masllombart/';
 const MAPA = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('Mas Llombart, Avinguda de la Conreria 16, 08105 Sant Fost de Campsentelles');
@@ -109,7 +112,7 @@ ${p.heroImg ? `<link rel="preload" as="image" href="${img(p.heroImg)}" fetchprio
     <div class="acciones-cab">
       <a href="${IG}" aria-label="Instagram de Mas Llombart" rel="noopener" target="_blank">${SVG.ig.replace('class="icono"', 'class="icono icono-sm"')}</a>
       <a href="${WA}" aria-label="Escribir por WhatsApp" rel="noopener" target="_blank">${SVG.wa.replace('class="icono"', 'class="icono icono-sm"')}</a>
-      <a href="${INTRANET}" aria-label="Área de novios" rel="noopener">${SVG.user}</a>
+      <a href="/area-clientes/" aria-label="Área de clientes: acceso a la intranet">${SVG.user}</a>
     </div>
   </div>
   ${p.migas && p.ruta !== '/' ? `<nav class="migas contenedor" aria-label="Migas de pan"><ol>${p.migas.map(([n, u], i) => i === p.migas.length - 1 ? `<li aria-current="page">${n}</li>` : `<li><a href="${u}">${n}</a></li>`).join('')}</ol></nav>` : ''}
@@ -699,6 +702,25 @@ paginas.push({
 <p>Las tipografías se sirven desde nuestro propio servidor y no cargamos mapas, vídeos ni redes sociales incrustados. Los enlaces a Instagram, WhatsApp o Google Maps solo os llevan a esos servicios si hacéis clic, y a partir de ahí se aplican sus propias políticas.</p>
 <p>El presupuestador guarda vuestra selección únicamente en la dirección (URL) de la página, para que podáis compartirla; no se almacena nada en vuestro dispositivo.</p>
 <p>Si en el futuro incorporamos herramientas de medición, actualizaremos esta política y os pediremos el consentimiento antes de activarlas.</p>
+</div></section>`,
+});
+paginas.push({
+  ruta: '/area-clientes/', archivo: 'area-clientes/index.html', titulo: 'Área de clientes | Mas Llombart', descripcion: 'Acceso a la intranet de novios y clientes de Mas Llombart.', noindex: true, sinCierre: true,
+  cuerpo: `<section class="seccion"><div class="estrecho centro">
+<h1>Área de clientes</h1>
+<p class="lead">Entrad en vuestra intranet para preparar la boda o el evento con nosotros.</p>
+<div class="accesos">
+  <a href="${INTRANET_NUEVA}" rel="noopener" class="acceso acceso-principal">
+    <strong class="acceso-titulo">Intranet de Mas Llombart</strong>
+    <span>Si os hemos enviado el enlace de acceso por email, entrad aquí con vuestro email y contraseña.</span>
+    <span class="boton acceso-boton">Entrar</span>
+  </a>
+  <a href="${INTRANET_ANTIGUA}" rel="noopener" class="acceso">
+    <strong class="acceso-titulo">Intranet anterior</strong>
+    <span>Si todavía no habéis recibido el nuevo acceso, seguid entrando aquí como siempre.</span>
+  </a>
+</div>
+<p class="acceso-ayuda">¿Dudas para entrar? Llamadnos al <a href="tel:+34672494212">672 494 212</a> o escribidnos por <a href="${WA}" target="_blank" rel="noopener">WhatsApp</a>.</p>
 </div></section>`,
 });
 paginas.push({

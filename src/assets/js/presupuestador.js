@@ -16,8 +16,8 @@
   };
   var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   var DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
-  // Máximo de aperitivos canjeables por buffets: menús 1-2-3 → 6 · 4-5-6-7 y Viva la Vida → 12 · menú 8 → ninguno
-  var CANJE_MAX = { gala: 6, gran: 12, vivalavida: 12 };
+  // Máximo de aperitivos canjeables por buffets: menús 1-2-3 → 6 · 4-5-6-7 → 12 · menú 8 y Viva la Vida → ninguno
+  var CANJE_MAX = { gala: 6, gran: 12 };
 
   var S = { fecha: null, anio: null, tarifa: null, nivelMin: null, menu: null, adultos: 100, ninos: 0, prof: 0, extras: {} };
   CAT.extras.forEach(function (e) { S.extras[e.id] = { on: false, variante: e.variantes ? e.variantes[0][0] : null, canje: -1, horas: 1 }; });

@@ -16,7 +16,8 @@
   };
   var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   var DIAS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
-  var CANJE_MAX = { gala: 6, gran: 12 };
+  // Máximo de aperitivos canjeables por buffets: menús 1-2-3 → 6 · 4-5-6-7 y Viva la Vida → 12 · menú 8 → ninguno
+  var CANJE_MAX = { gala: 6, gran: 12, vivalavida: 12 };
 
   var S = { fecha: null, anio: null, tarifa: null, nivelMin: null, menu: null, adultos: 100, ninos: 0, prof: 0, extras: {} };
   CAT.extras.forEach(function (e) { S.extras[e.id] = { on: false, variante: e.variantes ? e.variantes[0][0] : null, canje: -1, horas: 1 }; });
@@ -157,10 +158,38 @@
     if (e.excluyeMenus && S.menu && e.excluyeMenus.indexOf(S.menu) >= 0) return false;
     return true;
   }
-  function canjesValidos(e) {
-    if (!e.canjes || !S.menu) return [];
-    var ap = menuDef(S.menu).aperitivo; if (!CANJE_MAX[ap]) return [];
+  function topeCanjes() { return S.menu ? (CANJE_MAX[menuDef(S.menu).aperitivo] || 0) : 0; }
+  // Canjes de este extra que existen con el menú elegido (sin mirar el máximo)
+  function canjesDelMenu(e) {
+    if (!e.canjes || !S.menu || !topeCanjes()) return [];
     return e.canjes.map(function (c, i) { return { c: c, i: i }; }).filter(function (o) { return !o.c.menus || o.c.menus.indexOf(S.menu) >= 0; });
+  }
+  // Aperitivos ya canjeados por los otros extras elegidos
+  function canjeadosOtros(e) {
+    return CAT.extras.reduce(function (n, x) {
+      if (e && x.id === e.id) return n;
+      var st = S.extras[x.id]; if (!st.on || st.canje < 0) return n;
+      var o = canjesDelMenu(x).filter(function (k) { return k.i === st.canje; })[0];
+      return o ? n + o.c.aperitivos : n;
+    }, 0);
+  }
+  function canjesValidos(e) {
+    var queda = topeCanjes() - canjeadosOtros(e);
+    return canjesDelMenu(e).filter(function (o) { return o.c.aperitivos <= queda; });
+  }
+  function canjesSinSitio(e) {
+    var queda = topeCanjes() - canjeadosOtros(e);
+    return canjesDelMenu(e).filter(function (o) { return o.c.aperitivos > queda; });
+  }
+  // Nunca más canjes de los que permite el menú (p. ej. al pasar de menú 4 a menú 1): lo que no cabe pasa a pagar completo
+  function ajustarCanjes() {
+    var tope = topeCanjes(), usados = 0;
+    CAT.extras.forEach(function (x) {
+      var st = S.extras[x.id]; if (st.canje < 0) return;
+      var o = st.on ? canjesDelMenu(x).filter(function (k) { return k.i === st.canje; })[0] : null;
+      if (o && usados + o.c.aperitivos <= tope) { usados += o.c.aperitivos; return; }
+      if (st.on) st.canje = -1;
+    });
   }
   function bloqueadoPorPack(e) {
     return CAT.extras.some(function (p) { return p.pack && S.extras[p.id].on && extraDisponible(p) && p.pack.indexOf(e.id) >= 0; });
@@ -170,7 +199,7 @@
     var st = S.extras[e.id];
     var key = e.variantes ? st.variante : e.id;
     var base = precioExtra(key);
-    if (st.canje >= 0 && e.canjes) {
+    if (st.canje >= 0 && e.canjes && canjesDelMenu(e).some(function (o) { return o.i === st.canje; })) {
       var c = e.canjes[st.canje];
       return { importe: c.precioKey ? precioExtra(c.precioKey) : c.precio, canjeAp: c.aperitivos };
     }
@@ -232,6 +261,7 @@
     lista.forEach(function (n, i) { if (document.activeElement !== ins[i]) ins[i].value = n; });
   }
   function pintarExtras() {
+    ajustarCanjes();
     CAT.extras.forEach(function (e) {
       var d = $('.extra[data-id="' + e.id + '"]'), st = S.extras[e.id];
       if (e.barra) pintarPersonasBarra(e, st);
@@ -251,14 +281,16 @@
         sv.innerHTML = e.variantes.filter(function (v) { return precioExtra(v[0]) != null; }).map(function (v) { return '<option value="' + v[0] + '"' + (st.variante === v[0] ? ' selected' : '') + '>' + v[1] + ' · ' + f(precioExtra(v[0])) + '</option>'; }).join('');
       }
       if (e.canjes && disp) {
-        var sc = $('#x-' + e.id + '-c'), val = canjesValidos(e);
+        var sc = $('#x-' + e.id + '-c'), val = canjesValidos(e), fuera = canjesSinSitio(e);
         if (val.every(function (o) { return o.i !== st.canje; })) st.canje = -1;
         var key = e.variantes ? st.variante : e.id;
         sc.innerHTML = '<option value="-1">Pagar completo · ' + f(precioExtra(key)) + '</option>' + val.map(function (o) {
           var pr = o.c.precioKey ? precioExtra(o.c.precioKey) : o.c.precio;
           return '<option value="' + o.i + '"' + (st.canje === o.i ? ' selected' : '') + '>Canjear ' + o.c.aperitivos + ' aperitivos' + (pr ? ' + ' + f(pr) : ' · gratis') + '</option>';
+        }).join('') + fuera.map(function (o) {
+          return '<option value="' + o.i + '" disabled>Canjear ' + o.c.aperitivos + ' aperitivos (no cabe: máximo ' + topeCanjes() + ' con este menú)</option>';
         }).join('');
-        sc.disabled = val.length === 0;
+        sc.disabled = val.length === 0 && fuera.length === 0;
       }
     });
   }
@@ -291,6 +323,7 @@
 
   /* ---------- Cálculo ---------- */
   function calcular() {
+    ajustarCanjes();
     var lin = [], gastro = 0, otros = 0, canjeAp = 0, avisos = [];
     if (S.fecha && S.menu && menuDisponible(S.menu)) {
       var pm = precioMenu(S.menu), md = menuDef(S.menu);
